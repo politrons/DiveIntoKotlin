@@ -13,7 +13,6 @@ fun main() {
  * Finally in the remote case  you just want to create a mutable, you can do it using [mutableListOf]
  */
 fun creationList() {
-
     val strings = listOf("hello", "Kotlin", "world")
     println(strings.map { word -> word.toUpperCase() })
 
