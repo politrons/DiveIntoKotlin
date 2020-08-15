@@ -26,7 +26,7 @@ fun creationList() {
 
 /**
  * Access elements from list is not any different from any other functional language, you can obtain index element using []
- * get the first/last element using those operators, reverse the List using [asReversed]
+ * get the [first] [last] element using those operators, reverse the List using [asReversed]
  */
 fun accessList() {
     val numbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
@@ -42,17 +42,21 @@ fun accessList() {
  *
  */
 fun monadList() {
-    val filterNumbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).filter { number -> number > 5 }
-    println(filterNumbers)
+    val numbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val filterNumbers = numbers.filter { number -> number > 5 }
+    println("Filter $filterNumbers")
+
+    val maybeFive = numbers.find { number -> number == 5 }
+    println("Maybe Monad: $maybeFive")
 
     val strings = listOf("hello", "Kotlin", "world")
 
-    val numbers = listOfNotNull(1, 2, null, 3, 4, null, 5)
+    val numbersWithoutNulls = listOfNotNull(1, 2, null, 3, 4, null, 5)
 
     val pairStringAndNumber = strings
         .flatMap { word ->
-            numbers
+            numbersWithoutNulls
                 .map { number -> Pair(word.toUpperCase(), number * 10) }
         }
-    println(pairStringAndNumber)
+    println("Pair $pairStringAndNumber")
 }
