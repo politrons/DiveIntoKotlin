@@ -9,6 +9,10 @@ fun main() {
     println(SonClass().getNumber())
     println(MyFirstInterfaceImpl().getName())
     copyClassValue()
+    val man: Human = Man("politrons")
+    println(man)
+    println(Colors.RED)
+    Colors.values().forEach { color -> println(color) }
     SingletonObj.printHelloKotlin()
 }
 
