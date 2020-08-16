@@ -14,6 +14,7 @@ fun main() {
     println(Colors.RED)
     Colors.values().forEach { color -> println(color) }
     SingletonObj.printHelloKotlin()
+    ClassWithCompanionObject.create()
 }
 
 /**
@@ -139,4 +140,21 @@ enum class Colors {
  */
 object SingletonObj {
     fun printHelloKotlin() = println("Hello Kotlin from static singleton obj")
+}
+
+/**
+ * We can create companion object in a more readable way than in scala just adding inside the class [companion] follwed
+ * by object, with or without name (without you will use the same class name) and then automatically it can be used
+ * statically inside and out of the class.
+ */
+class ClassWithCompanionObject {
+
+    companion object {
+        const val ConstValue = 1981
+        fun create() = ClassWithCompanionObject()
+    }
+
+    init {
+        println(ConstValue)
+    }
 }
