@@ -56,9 +56,12 @@ class CannotInstantiateByConstructor private constructor() {
 /**
  * In Kotlin by default all classes are final, the only way to make it extendable is setting the
  * class with keyword [open]
- * To allow a method to be overridable we need to mark it also as [open]
+ * To allow a variables/method to be overridable we need to mark it also as [open]
  */
 open class ClassToBeExtended {
+
+    open val value = 0
+
     fun getHello() = "Hello Son"
 
     open fun getNumber(): Int = 10
@@ -66,12 +69,13 @@ open class ClassToBeExtended {
 
 /**
  * Extend a class in Kotlin you just need to use [:] and set the class to extend After.
- * To override a method you just need to use [override]
+ * To override a variable/method you just need to use [override]
  */
 class SonClass : ClassToBeExtended() {
     init {
         println(getHello())
     }
 
-    override fun getNumber():Int = 1981
+    override val value: Int = 2000
+    override fun getNumber(): Int = 1981
 }
