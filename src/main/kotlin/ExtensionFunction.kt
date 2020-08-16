@@ -19,6 +19,7 @@ fun main() {
     println("Hello world".wrapIn("$$$$"))
     println(1981.wrapIn("$$$$"))
     println(listOf("Check if is null", null).find { word -> word.secureLength() > 3 })
+    B(A("Hello extension function in class scope"))
 }
 
 /**
@@ -60,5 +61,25 @@ fun String?.secureLength(): Int {
     if (this == null) return 0
     return this.length
 }
+
+/**
+ * Ext fun of class A inside class B that is defined there, and we'ere able to use it,since we
+ * receive the instance of A.
+ * The really cool part is, that once you extend a class function you're able to access to all public elements
+ * of that class.
+ */
+class B(a: A) {
+
+    private fun A.getValueInUpperCase() = getValueInLowerCase().toUpperCase()
+
+    init {
+        println(a.getValueInUpperCase())
+    }
+}
+
+class A(private val value: String) {
+    fun getValueInLowerCase(): String = value.toLowerCase()
+}
+
 
 

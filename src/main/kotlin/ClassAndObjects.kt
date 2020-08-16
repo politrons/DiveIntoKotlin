@@ -6,7 +6,8 @@ fun main() {
     println(ClassWithMultipleConstructor("Hello Kotlin Class"))
     println(ClassWithMultipleConstructor(1981))
     println(CannotInstantiateByConstructor.create())
-    println(SonClass())
+    println(SonClass().getNumber())
+    println(MyFirstInterfaceImpl().getName())
 }
 
 /**
@@ -78,4 +79,15 @@ class SonClass : ClassToBeExtended() {
 
     override val value: Int = 2000
     override fun getNumber(): Int = 1981
+}
+
+interface MyFirstInterface {
+    fun getName(): String
+}
+
+class MyFirstInterfaceImpl : MyFirstInterface {
+    override fun getName(): String {
+        return "Politrons"
+    }
+
 }
