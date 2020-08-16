@@ -6,6 +6,7 @@ fun main() {
     println(ClassWithMultipleConstructor("Hello Kotlin Class"))
     println(ClassWithMultipleConstructor(1981))
     println(CannotInstantiateByConstructor.create())
+    println(SonClass())
 }
 
 /**
@@ -50,4 +51,27 @@ class CannotInstantiateByConstructor private constructor() {
             return CannotInstantiateByConstructor()
         }
     }
+}
+
+/**
+ * In Kotlin by default all classes are final, the only way to make it extendable is setting the
+ * class with keyword [open]
+ * To allow a method to be overridable we need to mark it also as [open]
+ */
+open class ClassToBeExtended {
+    fun getHello() = "Hello Son"
+
+    open fun getNumber(): Int = 10
+}
+
+/**
+ * Extend a class in Kotlin you just need to use [:] and set the class to extend After.
+ * To override a method you just need to use [override]
+ */
+class SonClass : ClassToBeExtended() {
+    init {
+        println(getHello())
+    }
+
+    override fun getNumber():Int = 1981
 }
