@@ -4,7 +4,8 @@ fun main() {
     creationList()
     accessList()
     monadList()
-    regularMap()
+    creationMap()
+    accessMap()
 }
 /**
  * List features
@@ -86,17 +87,29 @@ fun monadList() {
  *  To obtain a value we just need to use [key] to search for that key and obtain the value
  * We can also concat maps just using like in list [plus] or sugar [+] operator
  */
-fun regularMap() {
+fun creationMap() {
     val myMap = mapOf("foo" to "bla", Pair("key", "Value"))
     println(myMap)
-    println(myMap["key"])
     println(linkedMapOf("key" to "value"))
     println(sortedMapOf(Pair("key", "value")))
 
     val concatMap = mapOf(1 to "hello") + mapOf(2 to "kotlin")
     println("Concat map: $concatMap")
+}
 
-
+/**
+ * Access to map is similar like in list, we just use [key] this time instead of index, we specify
+ * the key of the entry we want to obtain.
+ * We can also obtain the [set] of keys and [collection] for values.
+ * [entries] return a list of Entry which contains the key/values
+ */
+fun accessMap() {
+    val myMap = mapOf("1" to "bla", Pair("2", "Value"))
+    println(myMap["key"])
+    println(myMap.keys)
+    println(myMap.values)
+    val entryList = myMap.entries.map { entry -> entry.key to entry.value }.toList()
+    println(entryList)
 }
 
 
