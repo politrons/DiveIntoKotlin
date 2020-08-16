@@ -18,8 +18,7 @@ fun main() {
     listOf(1, 2, 3, 4, 5).printEachElement()
     println("Hello world".wrapIn("$$$$"))
     println(1981.wrapIn("$$$$"))
-
-
+    println(listOf("Check if is null", null).find { word -> word.secureLength() > 3 })
 }
 
 /**
@@ -53,4 +52,13 @@ fun <T> List<T>.printEachElement() = this.forEach { element -> println(element) 
  * Genetic Ext fun that apply to all types and wrap the entry value to the extended value
  */
 fun <T> T.wrapIn(c: String) = c + this + c
+
+/**
+ * Ext fun of maybe String where we can have a String or null
+ */
+fun String?.secureLength(): Int {
+    if (this == null) return 0
+    return this.length
+}
+
 
