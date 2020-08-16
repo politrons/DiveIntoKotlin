@@ -9,6 +9,7 @@ fun main() {
     println(SonClass().getNumber())
     println(MyFirstInterfaceImpl().getName())
     copyClassValue()
+    SingletonObj.printHelloKotlin()
 }
 
 /**
@@ -99,13 +100,39 @@ class MyFirstInterfaceImpl : MyFirstInterface {
 }
 
 /**
- * Data type are pretty much like case class in Scala, provide a final class with all equal/hashCode/toString()
+ * [Data class] are pretty much like case class in Scala, provide a final class with all equal/hashCode/toString()
  * methods, and also copy() to create a copy of a instance changing the specify attribute.
+ * With Destructuring classes, we can extract variables from a data class just declaring the same number
+ * of variables as constructor has, before the instance of the class.
  */
 data class MyDataClass(val value1: String, val value2: String)
 
-fun copyClassValue(){
+fun copyClassValue() {
     val myDataClass = MyDataClass("hello", "Kotlin")
     val copyClass: MyDataClass = myDataClass.copy(value1 = "New Hello")
     println(copyClass)
+    val (value1, value2) = copyClass
+    println("$value1-$value2")
+}
+
+/**
+ * Just like in Scala with sealed trait
+ */
+sealed class Human
+data class Man(val name: String) : Human()
+data class Woman(val name: String) : Human()
+
+/**
+ * Just like Java enums
+ */
+enum class Colors {
+    RED, WHITE, BLACK
+}
+
+/**
+ * Just after Scala Kotlin apply the Singleton patter exactly the same way that Scala does.
+ * Define [object] and directly all the access is static and does not require instantiate.
+ */
+object SingletonObj {
+    fun printHelloKotlin() = println("Hello Kotlin from static singleton obj")
 }
