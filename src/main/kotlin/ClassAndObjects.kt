@@ -5,9 +5,10 @@ fun main() {
     println(ClassWithConstructor("Hello Kotlin Class", "World"))
     println(ClassWithMultipleConstructor("Hello Kotlin Class"))
     println(ClassWithMultipleConstructor(1981))
-    println(CannotInstantiateByConstructor.create())
+    println(ClassNotInstantiateByConstructor.create())
     println(SonClass().getNumber())
     println(MyFirstInterfaceImpl().getName())
+    copyClassValue()
 }
 
 /**
@@ -46,10 +47,10 @@ class ClassWithMultipleConstructor(val value: String) {
  * In case we want to make private a constructor we can just set as private the keyword [constructor]
  * and use a companion object to create the static factory method
  */
-class CannotInstantiateByConstructor private constructor() {
+class ClassNotInstantiateByConstructor private constructor() {
     companion object {
-        fun create(): CannotInstantiateByConstructor {
-            return CannotInstantiateByConstructor()
+        fun create(): ClassNotInstantiateByConstructor {
+            return ClassNotInstantiateByConstructor()
         }
     }
 }
@@ -81,13 +82,30 @@ class SonClass : ClassToBeExtended() {
     override fun getNumber(): Int = 1981
 }
 
+/**
+ * Nothing special with interfaces, if you know Java it's pretty much the same.
+ * Allows add fun with implementations as defaults in Java does.
+ */
 interface MyFirstInterface {
     fun getName(): String
+
+    fun sayHello(): String = "hello"
 }
 
 class MyFirstInterfaceImpl : MyFirstInterface {
     override fun getName(): String {
-        return "Politrons"
+        return sayHello() + " Politrons"
     }
+}
 
+/**
+ * Data type are pretty much like case class in Scala, provide a final class with all equal/hashCode/toString()
+ * methods, and also copy() to create a copy of a instance changing the specify attribute.
+ */
+data class MyDataClass(val value1: String, val value2: String)
+
+fun copyClassValue(){
+    val myDataClass = MyDataClass("hello", "Kotlin")
+    val copyClass: MyDataClass = myDataClass.copy(value1 = "New Hello")
+    println(copyClass)
 }
