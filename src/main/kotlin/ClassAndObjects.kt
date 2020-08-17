@@ -191,4 +191,3 @@ class MainClassImpl : MainClass {
 class DelegateClass(m: MainClass) : MainClass by m {
     fun myDelegateMethod() = sayHello()
 }
-
