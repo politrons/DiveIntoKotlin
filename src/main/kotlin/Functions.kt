@@ -10,6 +10,8 @@ fun main() {
     println(curryFunc("hello"))
     println(curryFunc("hello")("kotlin"))
     println(curryFunc("hello")("kotlin")("functional"))
+    val isMyNameFunc: (String) -> Boolean = outputFunc("username")
+    println(isMyNameFunc("politrons"))
 }
 
 /**
@@ -54,6 +56,24 @@ val curryFunc: (String) -> (String) -> (String) -> String =
         { value1 ->
             { value2 ->
                 ("$value  $value1  $value2").toUpperCase()
+            }
+        }
+    }
+
+/**
+ * As we describe before, it's perfectly normal that a function just return another function.
+ * To allow that we just need to follow the same principle for input data, but in this case
+ * for output data of the function, and wrap the whole output function in parenthesis
+ */
+val outputFunc: (String) -> ((String) -> Boolean) =
+    { value1 ->
+        if (value1 == "username") {
+            { value2 ->
+                value2 == "politrons"
+            }
+        } else {
+            { value2 ->
+                value2 == "foo"
             }
         }
     }
