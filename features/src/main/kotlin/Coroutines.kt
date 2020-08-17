@@ -6,6 +6,7 @@ suspend fun main() {
     backGroundProcess()
     blockingProcess()
     cancelProcess()
+    withTimeoutProcess()
 }
 
 /**
@@ -50,4 +51,20 @@ private suspend fun cancelProcess() {
     job.cancel()
     println(job)
     println("I can't wait no more Finally you finish!") // main thread continues while coroutine is delayed
+}
+
+/**
+ * If you need to establish a timeout for a coroutine, you just need to wrap the process in [withTimeout] specifying
+ * the max time to finish the process
+ */
+private suspend fun withTimeoutProcess() {
+    val job: Job = GlobalScope.launch {
+        withTimeout(500) {
+                println("I'm sleeping")
+                delay(1000L)
+        }
+    }
+    println("waiting.......") // main thread continues while coroutine is delayed
+    job.join()
+    println(job)
 }
