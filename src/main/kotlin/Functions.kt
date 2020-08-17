@@ -3,6 +3,7 @@ package main.kotlin
 
 fun main() {
     higherOrderFunc { value -> value == "hello" }
+    println(higherOrderFuncReturnFun("politrons")("politrons"))
     foldFunction()
     println(upperCaseFunc)
     println(upperCaseFunc("Hello functional world in Kotlin"))
@@ -21,6 +22,17 @@ fun main() {
  */
 fun higherOrderFunc(func: (String) -> Boolean) {
     println("Is Hello? ${func("hello")}")
+}
+
+/**
+ * As a higher order function return functions is also common, you just need to specify the function
+ * signature as return type
+ */
+fun higherOrderFuncReturnFun(value: String): (String) -> String {
+    return when (value) {
+        "POLITRONS" -> { s: String -> "hello $s how are you?" }
+        else -> { s: String -> "hello $s who are you?" }
+    }
 }
 
 /**
