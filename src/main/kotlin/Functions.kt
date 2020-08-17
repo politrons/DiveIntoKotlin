@@ -12,6 +12,7 @@ fun main() {
     println(curryFunc("hello")("kotlin")("functional"))
     val isMyNameFunc: (String) -> Boolean = outputFunc("username")
     println(isMyNameFunc("politrons"))
+    println(inferredFunc(10, "x"))
 }
 
 /**
@@ -77,3 +78,9 @@ val outputFunc: (String) -> ((String) -> Boolean) =
             }
         }
     }
+
+/**
+ * We can also avoid define the function types if we specify directly the types as the lambda arguments.
+ * Also the return type it will be inferred by the compiler
+ */
+val inferredFunc = { a: Int, b: String -> b.toUpperCase() + (a * 100) + b.toUpperCase() }
