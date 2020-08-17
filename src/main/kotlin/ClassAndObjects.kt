@@ -15,6 +15,9 @@ fun main() {
     Colors.values().forEach { color -> println(color) }
     SingletonObj.printHelloKotlin()
     ClassWithCompanionObject.create()
+    val myString: MyStringType = "Hello TypeAlias in Kotlin"
+    println(myString)
+    DelegateClass(MainClassImpl()).myDelegateMethod()
 }
 
 /**
@@ -143,7 +146,7 @@ object SingletonObj {
 }
 
 /**
- * We can create companion object in a more readable way than in scala just adding inside the class [companion] follwed
+ * [Companion Objects] We can create companion object in a more readable way than in scala just adding inside the class [companion] follwed
  * by object, with or without name (without you will use the same class name) and then automatically it can be used
  * statically inside and out of the class.
  */
@@ -158,3 +161,34 @@ class ClassWithCompanionObject {
         println(ConstValue)
     }
 }
+
+/**
+ * [inline] class is how we can unbox primitive types in types keeping the performance.
+ * It would be the same that in scala we do by case class(value:T) extends AnyVal
+ */
+inline class Username(val value: String)
+inline class Password(val value: String)
+
+/**
+ * Another feature exactly like in Scala, defining typeAlias for types, using [typealias] amd then pointing to a type
+ * ,you can use that type but with another name.
+ */
+typealias MyStringType = String
+
+/**
+ * [Delegate pattern] Apply delegate pattern in Kotlin is quite simple and handy. You just need to pass in the
+ * constructor the class where you want to delegate, and using the composition of [Class by instanceName]
+ * automatically you class can access to all members of the passed class without have to use the instance.
+ */
+interface MainClass {
+    fun sayHello()
+}
+
+class MainClassImpl : MainClass {
+    override fun sayHello() = println("Hello delegate class")
+}
+
+class DelegateClass(m: MainClass) : MainClass by m {
+    fun myDelegateMethod() = sayHello()
+}
+
