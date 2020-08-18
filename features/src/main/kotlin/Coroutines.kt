@@ -10,6 +10,7 @@ suspend fun main() {
     withTimeoutProcess()
     askPatternProcess()
     askLazyPatternProcess()
+    composeDeferred()
 }
 
 /**
@@ -81,17 +82,12 @@ private suspend fun withTimeoutProcess() {
  */
 @ObsoleteCoroutinesApi
 private fun askPatternProcess() = runBlocking {
-    val deferred1: Deferred<Int> = async {
+    val deferred: Deferred<Int> = async {
         delay(1000L)
         println("Running async process in thread ${Thread.currentThread().name}")
         1000
     }
-    val deferred2: Deferred<Int> = async(context = newFixedThreadPoolContext(100,"MyThreadPool")) {
-        delay(1000L)
-        println("Running async process in thread ${Thread.currentThread().name}")
-        500
-    }
-    println("The answer is ${deferred1.await() + deferred2.await()}")
+    println("The answer is ${deferred.await()}")
 }
 
 /**
@@ -110,3 +106,24 @@ private fun askLazyPatternProcess() = runBlocking {
     println("State $lazyDeferred")
     println("The answer is ${lazyDeferred.await()}")
 }
+
+/**
+ * Since all the blocking code [runBlocking] is running in a Coroutine, and we're not blocking the OS Thread
+ * it's perfectly fine to make composition to [await] for the first deferred inside the second one, so
+ * instead of use of [flatMap we can just wait until that happen to finish the second deferred.]
+ */
+@ObsoleteCoroutinesApi
+private fun composeDeferred() = runBlocking(context = Dispatchers.Default) {
+    val deferred1: Deferred<Int> = async {
+        delay(1000L)
+        println("Running async process in thread ${Thread.currentThread().name}")
+        1000
+    }
+    val deferred2: Deferred<Int> = async(context = newFixedThreadPoolContext(100,"MyThreadPool")) {
+        delay(1000L)
+        println("Running async process with composition of value ${deferred1.await()} in thread ${Thread.currentThread().name}")
+        500
+    }
+    println("Final result  ${ + deferred2.await()}")
+}
+
