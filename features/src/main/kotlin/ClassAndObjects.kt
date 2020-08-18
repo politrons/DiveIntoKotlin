@@ -20,6 +20,17 @@ fun main() {
     DelegateClass(MainClassImpl()).myDelegateMethod()
 }
 
+
+/**
+ * Kotlin has a cool default feature, it does not allow null values for types
+ */
+//val nullNotAllowed:String = null // it wont compile.
+
+/**
+ * To allow null types you need to specify [?] at the end of the type
+ */
+val nullAllowed:String? = null
+
 /**
  * Just like in all JVM lang classes are created with keyword [class]
  * If we decide we want to execute some functions in the constructor initialization, we need
