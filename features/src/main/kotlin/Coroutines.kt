@@ -1,8 +1,8 @@
 package main.kotlin
 
 import kotlinx.coroutines.*
-import java.util.concurrent.ThreadPoolExecutor
 
+@ObsoleteCoroutinesApi
 suspend fun main() {
     fireAndForgetProcess()
     blockingProcess()
