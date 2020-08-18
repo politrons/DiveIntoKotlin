@@ -1,6 +1,7 @@
 package main.kotlin
 
 import kotlinx.coroutines.*
+import java.util.concurrent.ThreadPoolExecutor
 
 suspend fun main() {
     fireAndForgetProcess()
@@ -8,6 +9,7 @@ suspend fun main() {
     cancelProcess()
     withTimeoutProcess()
     askPatternProcess()
+    askLazyPatternProcess()
 }
 
 /**
@@ -70,14 +72,41 @@ private suspend fun withTimeoutProcess() {
     println(job)
 }
 
+/**
+ * In Kotlin to perform ask pattern and run a process and receive a future, here called [Deferred] with
+ * the future response type, we use operator [async]
+ * Once we have this Deferred type we need to use [await] to wait and obtain the value in the main Thread
+ * All the concurrent process can specify in which dispatcher(pool of threads) being executed. We just have to pass as [context]
+ * a [ExecutorCoroutineDispatcher] implementation.
+ */
+@ObsoleteCoroutinesApi
 private fun askPatternProcess() = runBlocking {
     val deferred1: Deferred<Int> = async {
         delay(1000L)
+        println("Running async process in thread ${Thread.currentThread().name}")
         1000
     }
-    val deferred2: Deferred<Int> = async {
+    val deferred2: Deferred<Int> = async(context = newFixedThreadPoolContext(100,"MyThreadPool")) {
         delay(1000L)
+        println("Running async process in thread ${Thread.currentThread().name}")
         500
     }
     println("The answer is ${deferred1.await() + deferred2.await()}")
+}
+
+/**
+ * In case we want to create a computation to be executed in another thread but not
+ * in the moment of the creation, just like promises we need to just define the async with
+ * [start=CoroutineStart.LAZY] then only when we run the operator [start] is when
+ * the execution start. Just like promise.future -> future.succeed/failure
+ */
+private fun askLazyPatternProcess() = runBlocking {
+    val lazyDeferred: Deferred<Int> = async(start = CoroutineStart.LAZY) {
+        delay(1000L)
+        1000
+    }
+    println("State $lazyDeferred")
+    lazyDeferred.start()
+    println("State $lazyDeferred")
+    println("The answer is ${lazyDeferred.await()}")
 }
