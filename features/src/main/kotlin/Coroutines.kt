@@ -127,6 +127,6 @@ private fun composeDeferred() = runBlocking(context = Dispatchers.Default) {
         println("Running async process with composition of value ${deferred1.await()} in thread ${Thread.currentThread().name}")
         500
     }
-    println("Final result  ${+deferred2.await()}")
+    println("Final result  ${deferred2.await()}")
 }
 
