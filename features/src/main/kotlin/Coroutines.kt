@@ -3,13 +3,13 @@ package main.kotlin
 import kotlinx.coroutines.*
 
 @ObsoleteCoroutinesApi
-suspend fun main() {
+fun main() {
     fireAndForgetProcess()
-    blockingProcess()
-    cancelProcess()
-    withTimeoutProcess()
-    askPatternProcess()
-    askLazyPatternProcess()
+    runBlocking { blockingProcess() }
+    runBlocking { cancelProcess() }
+    runBlocking { withTimeoutProcess() }
+    runBlocking { askPatternProcess() }
+    runBlocking { askLazyPatternProcess() }
     composeDeferred()
 }
 
@@ -32,6 +32,9 @@ private fun fireAndForgetProcess() {
  * In case we want to wait and blocking for a process to finish we just need to use [join] operator from Job in the
  * main thread.
  * When we print the state of the job in this case is [Completed]
+ * Kotlin only can run this blocking process from [runBlocking] which only it's recommended from main(init-end)
+ * in case we don't run in a runBlocking we need to specify the function with [suspend] which means is not evaluated
+ *  and join into the main thread until is running in a [runBlocking]
  */
 private suspend fun blockingProcess() {
     val job: Job = GlobalScope.launch {
@@ -81,8 +84,8 @@ private suspend fun withTimeoutProcess() {
  * a [ExecutorCoroutineDispatcher] implementation.
  */
 @ObsoleteCoroutinesApi
-private fun askPatternProcess() = runBlocking {
-    val deferred: Deferred<Int> = async {
+private suspend fun askPatternProcess() {
+    val deferred: Deferred<Int> = GlobalScope.async {
         delay(1000L)
         println("Running async process in thread ${Thread.currentThread().name}")
         1000
@@ -96,8 +99,8 @@ private fun askPatternProcess() = runBlocking {
  * [start=CoroutineStart.LAZY] then only when we run the operator [start] is when
  * the execution start. Just like promise.future -> future.succeed/failure
  */
-private fun askLazyPatternProcess() = runBlocking {
-    val lazyDeferred: Deferred<Int> = async(start = CoroutineStart.LAZY) {
+private suspend fun askLazyPatternProcess() {
+    val lazyDeferred: Deferred<Int> = GlobalScope.async(start = CoroutineStart.LAZY) {
         delay(1000L)
         1000
     }
@@ -119,11 +122,11 @@ private fun composeDeferred() = runBlocking(context = Dispatchers.Default) {
         println("Running async process in thread ${Thread.currentThread().name}")
         1000
     }
-    val deferred2: Deferred<Int> = async(context = newFixedThreadPoolContext(100,"MyThreadPool")) {
+    val deferred2: Deferred<Int> = async(context = newFixedThreadPoolContext(100, "MyThreadPool")) {
         delay(1000L)
         println("Running async process with composition of value ${deferred1.await()} in thread ${Thread.currentThread().name}")
         500
     }
-    println("Final result  ${ + deferred2.await()}")
+    println("Final result  ${+deferred2.await()}")
 }
 
