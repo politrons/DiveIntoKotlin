@@ -2,6 +2,11 @@ package main.kotlin
 
 import kotlinx.coroutines.*
 
+/**
+ * Coroutines are light-weight threads. All blocking code must be executed inside [runBlocking]
+ * which it will be executed in a coroutine and it will make the join with the main thread once
+ * the process finish.
+ */
 @ObsoleteCoroutinesApi
 fun main() {
     fireAndForgetProcess()
@@ -14,7 +19,7 @@ fun main() {
 }
 
 /**
- * Coroutines are light-weight threads. Using [GlobalScope.launch] we're able to run async the process.
+ * Using [GlobalScope.launch] we're able to run async the process.
  * This operation it will create a [Job] instance which we can use to perform several operations.
  * When we print the state of the job in this case is [Active]
  */
