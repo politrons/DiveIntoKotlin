@@ -24,6 +24,8 @@ fun main() {
     runBlocking { filter() }
     runBlocking { scan() }
     runBlocking { bulkHeadPattern() }
+    runBlocking { zipFlows() }
+    runBlocking { errorHandlerPattern() }
 }
 
 /**
@@ -53,14 +55,14 @@ private suspend fun streamFlows() {
 }
 
 /**
- * As we mention before, since Flow are monads, we can compose Flows usoing [flatMapMerge] which it will compose
+ * As we mention before, since Flow are monads, we can compose Flows using [flatMapMerge] which it will compose
  * a new flow with the previous one sequentially.
  */
 @FlowPreview
 private suspend fun flatMapFlows() {
     listOf("hello", "composition", "flow", "world")
         .asFlow()
-        .flatMapMerge { number -> flow { emit(number.toUpperCase()) } }
+        .flatMapConcat { number -> flow { emit(number.toUpperCase()) } }
         .collect { result -> println(result) }
 }
 
@@ -127,4 +129,31 @@ private suspend fun bulkHeadPattern() {
         .onEach { result -> println("Element $result running in thread ${Thread.currentThread().name}") }
         .flowOn(context = newFixedThreadPoolContext(10, "MyLightweightThread"))
         .collect { result -> println("Final result $result in thread ${Thread.currentThread().name}") }
+}
+
+/**
+ * [zip] is another standard reactive operator to run two streams in parallel and then merge together once both
+ * have finish their tasks
+ */
+private suspend fun zipFlows() {
+    val flow1: Flow<String> = listOf("hello", "zip")
+        .asFlow()
+    val flow2: Flow<String> = listOf("flow", "world")
+        .asFlow()
+    flow1.zip(flow2) { value1, value2 -> "$value1 - $value2" }
+        .map { value -> value.toUpperCase() }
+        .collect { result -> println(result) }
+}
+
+private suspend fun errorHandlerPattern() {
+    listOf("1", "2", "flow", "3")
+        .asFlow()
+        .map { result -> result.toInt() }
+        .catch { t ->
+            flow<Int> {
+                println("Error in stream. Caused by $t")
+                666
+            }
+        }
+        .collect { result -> println(result) }
 }
