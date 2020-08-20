@@ -145,15 +145,18 @@ private suspend fun zipFlows() {
         .collect { result -> println(result) }
 }
 
+/**
+ * Error handler in Stream to get all possible throwable, and allow you to return a last element before the stream is stopped.
+ * Using inside the catch the [emitAll] it's allow you to return last emission in the stream.
+ * Pretty much the same than [onErrorResumeNext] of Rx
+ */
 private suspend fun errorHandlerPattern() {
     listOf("1", "2", "flow", "3")
         .asFlow()
         .map { result -> result.toInt() }
         .catch { t ->
-            flow<Int> {
-                println("Error in stream. Caused by $t")
-                666
-            }
+            println("Error in stream. Caused by $t")
+            emitAll(flow{emit(666)})
         }
         .collect { result -> println(result) }
 }
