@@ -25,7 +25,7 @@ fun main() {
     runBlocking { scan() }
     runBlocking { bulkHeadPattern() }
     runBlocking { zipFlows() }
-    runBlocking { errorHandlerPattern() }
+    runBlocking { errorHandler() }
 }
 
 /**
@@ -150,7 +150,7 @@ private suspend fun zipFlows() {
  * Using inside the catch the [emitAll] it's allow you to return last emission in the stream.
  * Pretty much the same than [onErrorResumeNext] of Rx
  */
-private suspend fun errorHandlerPattern() {
+private suspend fun errorHandler() {
     listOf("1", "2", "flow", "3")
         .asFlow()
         .map { result -> result.toInt() }
