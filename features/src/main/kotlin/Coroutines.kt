@@ -154,18 +154,18 @@ private fun renderFunction() {
 }
 
 private suspend fun asyncService1(value: String): String {
-    return GlobalScope.async(start = CoroutineStart.LAZY) {
+    return withContext(Dispatchers.Default) {
         delay(100L)
         val result = asyncService2(value)
         "Async $result"
-    }.await()
+    }
 }
 
 private suspend fun asyncService2(value: String): String {
-    return GlobalScope.async(start = CoroutineStart.LAZY) {
+    return withContext(Dispatchers.Default) {
         delay(100L)
         "World $value"
-    }.await()
+    }
 }
 
 
