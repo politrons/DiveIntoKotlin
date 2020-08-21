@@ -143,11 +143,15 @@ private fun composeDeferred() = runBlocking(context = Dispatchers.Default) {
  */
 private fun renderFunction() {
     val channel: Channel<String> = Channel(1000)
+
     GlobalScope.launch(context = newFixedThreadPoolContext(30, "MyDispatcher")) {
-        for (request in channel) {
-            val result = "Hello ${asyncService1(request)}"
-            println("Rendering value: $result")
+        coroutineScope {
+            for (request in channel) {
+                val result = "Hello ${asyncService1(request)}"
+                println("Rendering value: $result")
+            }
         }
+
     }
     GlobalScope.launch { channel.send("!!!!") }
     GlobalScope.launch { channel.send("!!!!") }//They can run in parallel
