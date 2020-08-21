@@ -14,5 +14,6 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[Coroutines](features/src/main/kotlin/Coroutines.kt)**
 * **[Flows](features/src/main/kotlin/Flows.kt)**
 * **[Channels](features/src/main/kotlin/Channels.kt)**
+* **[Infix](features/src/main/kotlin/Infix.kt)**
 
 
