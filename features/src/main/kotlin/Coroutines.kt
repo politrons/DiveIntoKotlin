@@ -150,17 +150,21 @@ private fun renderFunction() {
         }
     }
     GlobalScope.launch { channel.send("!!!!") }
-    Thread.sleep(2000)
+    GlobalScope.launch { channel.send("!!!!") }//They can run in parallel
+    Thread.sleep(2000) // Only to prove that works!
 }
 
 private suspend fun asyncService1(value: String): String {
-    return withContext(Dispatchers.Default) {
-        delay(100L)
-        val result = asyncService2(value)
-        "Async $result"
-    }
+    delay(100L)
+    val result = asyncService2(value)
+    return "Async $result"
 }
 
+/**
+ * Once we have a function that is blocking we need to wrap it in a coroutine, and all the functions
+ * that it will invoke this function they will have to be suspend or wrap the invocation into [runBlocking]
+ * which it will block the OS thread, try to avoid that at all cost!
+ */
 private suspend fun asyncService2(value: String): String {
     return withContext(Dispatchers.Default) {
         delay(100L)
