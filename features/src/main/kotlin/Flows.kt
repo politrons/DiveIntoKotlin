@@ -123,7 +123,7 @@ private suspend fun scan() {
  * Using [flowOn] operator, just like [subscribeOn] of Rx we are able to configure in which dispatcher we want to
  * execute the stream, setting a maximum resources(Threads) that the stream can consume.
  */
-private suspend fun bulkHeadPattern() {
+suspend fun bulkHeadPattern() {
     listOf("hello", "dispatcher", "flow", "world")
         .asFlow()
         .onEach { result -> println("Element $result running in thread ${Thread.currentThread().name}") }
