@@ -1,6 +1,7 @@
 package main.kotlin
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 
 /**
  * Coroutines are light-weight threads. All blocking code must be executed inside [runBlocking]
@@ -16,6 +17,7 @@ fun main() {
     runBlocking { askPatternProcess() }
     runBlocking { askLazyPatternProcess() }
     composeDeferred()
+    renderFunction()
 }
 
 /**
@@ -134,4 +136,36 @@ private fun composeDeferred() = runBlocking(context = Dispatchers.Default) {
     }
     println("Final result  ${deferred2.await()}")
 }
+
+/**
+ * This function emulate a entry server request and how we manage to invoke several async service and render in
+ * async way
+ */
+private fun renderFunction() {
+    val channel: Channel<String> = Channel(1000)
+    GlobalScope.launch(context = newFixedThreadPoolContext(30, "MyDispatcher")) {
+        for (request in channel) {
+            val result = "Hello ${asyncService1(request)}"
+            println("Rendering value: $result")
+        }
+    }
+    GlobalScope.launch { channel.send("!!!!") }
+    Thread.sleep(2000)
+}
+
+private suspend fun asyncService1(value: String): String {
+    return GlobalScope.async(start = CoroutineStart.LAZY) {
+        delay(100L)
+        val result = asyncService2(value)
+        "Async $result"
+    }.await()
+}
+
+private suspend fun asyncService2(value: String): String {
+    return GlobalScope.async(start = CoroutineStart.LAZY) {
+        delay(100L)
+        "World $value"
+    }.await()
+}
+
 
