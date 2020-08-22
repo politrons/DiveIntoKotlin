@@ -2,6 +2,9 @@ package main.kotlin
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
+import scala.compat.java8.FutureConverters
+import scala.concurrent.Future
+import java.util.concurrent.CompletableFuture
 
 /**
  * Coroutines are light-weight threads. All blocking code must be executed inside [runBlocking]
@@ -18,6 +21,7 @@ fun main() {
     runBlocking { askLazyPatternProcess() }
     composeDeferred()
     renderFunction()
+    runBlocking { println(transformCompletableFutureToCoroutine()) }
 }
 
 /**
@@ -173,6 +177,35 @@ private suspend fun asyncService2(value: String): String {
     return withContext(Dispatchers.Default) {
         delay(100L)
         "World $value"
+    }
+}
+
+//Not working yet
+private suspend fun transformScalaFutureToCoroutine(): String {
+    val future: Future<String> = Future.successful("Hello world from Scala")
+    val completableFuture: CompletableFuture<String> = FutureConverters.toJava(future).toCompletableFuture()
+    val channel: Channel<String> = Channel()
+    completableFuture.thenAccept { result ->
+        GlobalScope.launch {
+            channel.send(result)
+        }
+    }
+    return withContext(Dispatchers.Default) {
+        channel.receive()
+    }
+}
+
+private suspend fun transformCompletableFutureToCoroutine(): String {
+    val channel: Channel<String> = Channel()
+    val future: CompletableFuture<String> =
+        CompletableFuture.completedFuture("hello world from CompletableFuture")
+    future.thenAccept { result ->
+        GlobalScope.launch {
+            channel.send(result)
+        }
+    }
+    return withContext(Dispatchers.Default) {
+        channel.receive()
     }
 }
 
