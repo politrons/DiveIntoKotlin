@@ -195,6 +195,9 @@ private suspend fun transformScalaFutureToCoroutine(): String {
     }
 }
 
+/**
+ * Function that transform a Completable future of Java into Kotlin coroutine without any blocking threads.
+ */
 private suspend fun transformCompletableFutureToCoroutine(): String {
     val channel: Channel<String> = Channel()
     val future: CompletableFuture<String> =
