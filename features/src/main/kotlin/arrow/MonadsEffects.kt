@@ -53,6 +53,7 @@ private fun tryMonad() {
     val tryString: Try<String> =
         Try.just("Hello side-effect of Throwable")
             .map { value -> value.toUpperCase() }
+            .flatMap { value -> Try.just("$value!!!") }
     tryWhen(tryString)
     tryWhen(Failure(NullPointerException()))
 
