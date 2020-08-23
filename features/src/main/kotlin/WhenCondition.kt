@@ -1,6 +1,9 @@
 package main.kotlin
 
-
+/**
+ * [When] condition is a caffeine free version of Scala pattern matching, improve the Java switch a little bit
+ * since allow us discriminate type by casting, but still far powerful as the Scala feature allow.
+ */
 fun main() {
     stringWhen()
     classWhen()
@@ -22,7 +25,7 @@ fun classWhen() {
     val animalName = when (val animal: Animal = Dog("Bingo")) {
         is Dog -> "This Dog is called ${animal.name}"
         is Cat -> "This Cat is called ${animal.name}"
-        else -> "I dont know this animal"
+        else -> "I don't know this animal"
     }
     println(animalName)
 }
