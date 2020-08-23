@@ -17,7 +17,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[Infix](features/src/main/kotlin/Infix.kt)**
 * **[When condition](features/src/main/kotlin/WhenCondition.kt)**
 
-# ![alt text](img/arrow.png) 
+![alt text](img/arrow.png) 
 
 ## Arrow 
 * **[Monads](features/src/main/kotlin/arrow/MonadsEffects.kt)**
