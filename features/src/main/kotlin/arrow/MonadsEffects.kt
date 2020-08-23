@@ -1,7 +1,12 @@
+@file:Suppress("NAME_SHADOWING")
+
 package main.kotlin.arrow
 
 import arrow.core.*
 import arrow.core.extensions.fx
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 /**
@@ -14,6 +19,8 @@ fun main() {
     eitherMonad()
     optionFx()
     eitherFx()
+    customMonad()
+    runBlocking { customCoroutine() }
 }
 
 /**
@@ -106,6 +113,12 @@ private fun optionFx() {
     println(noneValue)
 }
 
+/**
+ * Here we use [Either.fx] and inside the curly braces we can define with [!] all Either monads, and the values
+ * are extracted to allow composition of types, just like for-comprehension does.
+ * It will Always return Right type.
+ * In case any of the Either is Left the whole composition stop and it will return Left with that value
+ */
 private fun eitherFx() {
     val eitherRight: Either<Nothing, String> = Either.fx {
         val right1 = !Right("hello ")
@@ -141,4 +154,107 @@ fun eitherString(value: String): Either<Int, String> {
         Left(1981)
     }
 }
+
+/**
+ * Extract Transform Wrap
+ * ----------------------
+ */
+/**
+ * This patter is about to create an ADT(Algebra data type) which expect to receive in the constructor a type
+ * <T> and implement three functions.
+ * [get] to unwrap the value and return it.
+ * [map] to pass a function that invoke [get] to unwrap value and apply a function over that value to transform into <S>.
+ * [flatMap] to pass a function that invoke [get] to unwrap value and apply a function over that value to transform into ADT<S>.
+ */
+class CustomMonad<T> private constructor(private val value: T) {
+
+    companion object {
+        fun <T> pure(value: T): CustomMonad<T> {
+            return CustomMonad(value)
+        }
+    }
+
+    fun get(): T {
+        return value
+    }
+
+    fun <S> map(fn: (T) -> S): CustomMonad<S> {
+        return CustomMonad(fn(get()))
+    }
+
+    fun <S> flatMap(fn: (T) -> CustomMonad<S>): CustomMonad<S> {
+        return fn(get())
+    }
+}
+
+/**
+ * This generic monad can use potentially with all types, and provide pattern to extract, transform and wrap the value.
+ * Also it provide composition thanks to the flatMap
+ */
+fun customMonad() {
+    val value: String =
+        CustomMonad.pure("politrons")
+            .flatMap { value -> CustomMonad.pure("$value!!!") }
+            .map { value -> value.toUpperCase() }
+            .get()
+    println(value)
+
+    val number: Int =
+        CustomMonad.pure(1981)
+            .flatMap { value -> CustomMonad.pure(value * 10) }
+            .map { value -> value + 1000 }
+            .get()
+    println(number)
+}
+
+/**
+ * Coroutine Monad
+ * ----------------
+ */
+/**
+ * Monad that wrap the type T and run each function in a [coroutine]
+ */
+class CoroutineMonad<T> private constructor(private val value: T) {
+
+    companion object {
+        fun <T> pure(value: T): CoroutineMonad<T> {
+            return CoroutineMonad(value)
+        }
+    }
+
+    suspend fun get(): T {
+        return withContext(Dispatchers.Default) {
+            value
+        }
+    }
+
+    suspend fun <S> map(func: (T) -> S): CoroutineMonad<S> {
+        return CoroutineMonad(
+            withContext(Dispatchers.Default) {
+                func(get())
+            }
+        )
+    }
+
+    suspend fun <S> flatMap(func: (T) -> CoroutineMonad<S>): CoroutineMonad<S> {
+        return CoroutineMonad(
+            withContext(Dispatchers.Default) {
+                func(get()).get()
+            })
+    }
+}
+
+suspend fun customCoroutine() {
+    val result = CoroutineMonad.pure("politrons working async")
+        .flatMap { value ->
+            println("Thread info ${Thread.currentThread().name}")
+            CoroutineMonad.pure("$value!!!")
+        }
+        .map { value ->
+            println("Thread info ${Thread.currentThread().name}")
+            value.toUpperCase()
+        }.get()
+    println(result)
+}
+
 
