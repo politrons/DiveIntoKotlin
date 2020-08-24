@@ -4,10 +4,6 @@ package main.kotlin.arrow
 
 import arrow.core.*
 import arrow.core.extensions.fx
-import arrow.mtl.EitherT
-import arrow.mtl.OptionT
-import arrow.mtl.extensions.eithert.monad.monad
-import arrow.typeclasses.Applicative
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
