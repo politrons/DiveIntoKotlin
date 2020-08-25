@@ -1,5 +1,8 @@
 package main.kotlin.ktor
 
+import arrow.core.Option
+import arrow.core.getOrElse
+import arrow.core.leftIor
 import com.google.gson.Gson
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
@@ -28,18 +31,18 @@ fun main() {
         routing {
             get("/types") {
                 val params: Parameters = call.request.queryParameters
-                val param: String? = params.get("foo")
+                val maybeParam: Option<String?> = Option(params["foo"])
                 val defferResponse: Deferred<Response> = async {
                     //We place all the async logic of application here.
-                    Response("Ktor Async server with param $param")
+                    Response("Ktor Async server with param ${maybeParam.getOrElse { "Empty" }}")
                 }
                 call.responseJson(defferResponse)
             }
             get("/template") {
                 val params: Parameters = call.request.queryParameters
-                val username: String? = params.get("user")
-                val email: String? = params.get("email")
-                val feature: String? = params.get("feature")
+                val username: String? = params["user"]
+                val email: String? = params["email"]
+                val feature: String? = params["feature"]
                 val defferResponse: Deferred<Pair<User, Feature>> = async {
                     User(username, email) to Feature(feature)
                 }
