@@ -47,10 +47,6 @@ fun functionalEffectProgram() {
     println(functionalEffectsProgram.unsafeRunSync())
 }
 
-fun interopOption(){
-
-}
-
 private suspend fun asyncValue2() = withContext(Dispatchers.Default) {
     "side-effect world "
 }

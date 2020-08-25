@@ -60,6 +60,8 @@
     <orderEntry type="library" name="Maven: io.ktor:ktor-http-jvm:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe:config:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.3.61" level="project" />
+    <orderEntry type="library" name="Maven: io.ktor:ktor-freemarker:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.30" level="project" />
     <orderEntry type="library" name="Maven: io.ktor:ktor-server-netty:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: io.ktor:ktor-server-host-common:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: io.ktor:ktor-http-cio-jvm:1.3.1" level="project" />
