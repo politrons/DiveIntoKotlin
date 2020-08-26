@@ -13,6 +13,7 @@ import io.ktor.features.StatusPages
 import io.ktor.freemarker.FreeMarker
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.http.ContentType
+import io.ktor.http.Headers
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.response.respond
@@ -24,12 +25,29 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
 import kotlinx.coroutines.*
 
+/**
+ * Ktor server it work with multiple transport layer engine like Netty, Tomcat, Jetty, Servlet.
+ * Here we have the dependency for Netty, so we use in the [embeddedServer] Netty passing also a port.
+ * That create a [NettyApplicationEngine] which is a subclass of [BaseApplicationEngine]
+ *
+ * Inside the [Application] we can have:
+ *
+ * * [Features] which has multiple implementations
+ *      and the possibility to create your own feature. In this case we have
+ * * * [ErrorHandler] to control all exceptions in the Http server and return always a Custom error message.
+ * * * [FreeMarker] to render the ftl file as html file
+ *
+ * * [Routing] where we can use the DSL to define our Http protocol for [get, post, put, delete]
+ *      [call] is the session with all the [request, response, context]
+ *      Into the [request] attribute inside the [call] we can get the [queryParams, uri, headers]
+ */
 fun main() {
     val server: NettyApplicationEngine = embeddedServer(Netty, port = 8080) {
         installErrorHandlerFeature()
         installFreeMarkerFeature()
         routing {
             get("/types") {
+                val headers: Headers = call.request.headers
                 val params: Parameters = call.request.queryParameters
                 val maybeParam: Option<String?> = Option(params["foo"])
                 val defferResponse: Deferred<Response> = async {
@@ -104,7 +122,12 @@ private fun Application.installErrorHandlerFeature() {
     }
 }
 
+/**
+ * Domain
+ * ------
+ */
 data class User(val name: String?, val email: String?)
+
 data class Feature(val name: String?)
 
 data class Response(val message: String)
