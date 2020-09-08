@@ -40,7 +40,7 @@ fun main() {
  * Here we have the dependency for Netty, so we use in the [embeddedServer] Netty passing also a port.
  * That create a [NettyApplicationEngine] which is a subclass of [BaseApplicationEngine]
  *
- * Inside the [Application] we can have [features] and [routinh]:
+ * Inside the [Application] we can have [features] and [routing]:
  */
 private fun initServer() {
     val server: NettyApplicationEngine = embeddedServer(Netty, port = 8080) {
