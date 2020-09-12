@@ -20,7 +20,6 @@ fun main() {
     DelegateClass(MainClassImpl()).myDelegateMethod()
 }
 
-
 /**
  * Kotlin has a cool default feature, it does not allow null values for types
  */
