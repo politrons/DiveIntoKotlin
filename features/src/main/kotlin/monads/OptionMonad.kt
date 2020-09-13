@@ -41,11 +41,11 @@ sealed class Option<T> : FunctionalAPI<Option<*>, T> {
 
     abstract override fun filter(func: (T) -> Boolean): Option<T>
 
-    abstract fun <B> fold(ifEmpty: B, func: (T) -> B): Option<B>
+    abstract override fun <B> fold(ifEmpty: B, func: (T) -> B): Option<B>
 
-    abstract fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B>
+    abstract override fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B>
 
-    abstract fun <B> foldRight(v: B, func: (T, B) -> B): Option<B>
+    abstract override fun <B> foldRight(v: B, func: (T, B) -> B): Option<B>
 
     abstract fun getOrElse(default: T): T
 
