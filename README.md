@@ -29,3 +29,10 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 
 ## Ktor
 * **[Server](features/src/main/kotlin/ktor/Server.kt)**
+
+![alt text](img/pure.png) 
+
+## Functional effects
+
+* **[Option](features/src/main/kotlin/monads/OptionMonad.kt)**
+

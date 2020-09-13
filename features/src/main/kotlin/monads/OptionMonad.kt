@@ -1,15 +1,8 @@
-package main.kotlin
-
+package main.kotlin.monads
 
 fun main() {
     optionMonad()
 }
-
-/**
- * ---------------
- * Option Monad
- * ---------------
- */
 
 private fun optionMonad() {
     someExample()
@@ -24,7 +17,7 @@ private fun optionMonad() {
  *  and Some in case it has.
  * We define all common Functional API like map, flatMap, filter, foldLeft, foldRight, getOrElse, isDefined.
  */
-sealed class Option<T> {
+sealed class Option<T> : FunctionalAPI<Option<*>, T> {
     companion object {
         fun <T> of(value: T): Option<T> {
             return if (value == null || value == "") None() else Some(value)
@@ -33,11 +26,11 @@ sealed class Option<T> {
 
     abstract fun isDefined(): Boolean
 
-    abstract fun <B> map(func: (T) -> B): Option<B>
+    abstract override fun <B> map(func: (T) -> B): Option<B>
 
-    abstract fun <B> flatMap(func: (T) -> Option<B>): Option<B>
+    abstract override fun <B> flatMap(func: (T) -> Option<B>): Option<B>
 
-    abstract fun filter(func: (T) -> Boolean): Option<T>
+    abstract override fun filter(func: (T) -> Boolean): Option<T>
 
     abstract fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B>
 
@@ -49,14 +42,40 @@ sealed class Option<T> {
 
 }
 
+/**
+ * We implement the effect that the [Option] comntain a value,so then we can allow
+ * transformation with [map], composition with [flatMap] and some other operators
+ * implementations defining functions.
+ */
 class Some<T>(private val value: T) : Option<T>() {
 
+    /**
+     * Transformation function, it receive value T and transform into value B
+     */
     override fun <B> map(func: (T) -> B): Option<B> {
         return Some(func(value))
     }
 
+    /**
+     * Composition function, it receive value T and transform into Option of value B
+     */
     override fun <B> flatMap(func: (T) -> Option<B>): Option<B> {
         return func(value)
+    }
+
+    /**
+     * Predicate function, it receive value T and the function return a boolean
+     */
+    override fun filter(func: (T) -> Boolean): Option<T> {
+        return if (func(value)) Some(value) else None()
+    }
+
+    override fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B> {
+        return Some(func(v, value))
+    }
+
+    override fun <B> foldRight(v: B, func: (T, B) -> B): Option<B> {
+        return Some(func(value, v))
     }
 
     override fun getOrElse(default: T): T {
@@ -71,20 +90,12 @@ class Some<T>(private val value: T) : Option<T>() {
         return value
     }
 
-    override fun filter(func: (T) -> Boolean): Option<T> {
-        return if (func(value)) Some(value) else None()
-    }
-
-    override fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B> {
-        return Some(func(v, value))
-    }
-
-    override fun <B> foldRight(v: B, func: (T, B) -> B): Option<B> {
-        return Some(func(value, v))
-    }
-
 }
 
+/**
+ * In case of effect that we pass an Option with null or empty, we return in most
+ * of the functions None or if it's passed a default value in a function, the default.
+ */
 class None<T> : Option<T>() {
     override fun <B> map(func: (T) -> B): Option<B> {
         return None()
