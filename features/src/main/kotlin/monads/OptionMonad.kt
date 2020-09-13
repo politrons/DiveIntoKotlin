@@ -13,8 +13,13 @@ private fun optionMonad() {
 
 /**
  * Implementation of Option monad, to control side-effect of null/empty
- * sealed class where we define the API that must be implemented by None in case there's no value and Some in case it has.
- * We define all common [FunctionalAPI] like map, flatMap, filter, foldLeft, foldRight, getOrElse, isDefined
+ *
+ * sealed class where we define the Factory functions and API that must be implemented by None in case there's no value and Some in case it has.
+ *
+ * We create a companion object that contains creation functions to return an Option<T> in case we use [of] operator
+ * or Option<Nothing> if we use [empty]
+ *
+ * Also we define all common [FunctionalAPI] like map, flatMap, filter, foldLeft, foldRight, getOrElse, isDefined
  * for Option monad.
  */
 sealed class Option<T> : FunctionalAPI<Option<*>, T> {
