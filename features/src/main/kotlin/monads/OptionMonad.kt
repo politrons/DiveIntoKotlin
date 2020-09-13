@@ -22,6 +22,10 @@ sealed class Option<T> : FunctionalAPI<Option<*>, T> {
         fun <T> of(value: T): Option<T> {
             return if (value == null || value == "") None() else Some(value)
         }
+
+        fun empty():Option<Nothing> {
+            return None()
+        }
     }
 
     abstract fun isDefined(): Boolean
@@ -181,6 +185,8 @@ private fun noneExample() {
             .fold("No values!!", { value -> value.toUpperCase() })
     println(fold.getOrElse(""))
 
+    val empty: Option<Nothing> = Option.empty()
+    println(empty.fold("empty value", {a -> a}).getOrElse(""))
 }
 
 private fun someExample() {
