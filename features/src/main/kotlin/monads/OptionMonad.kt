@@ -13,9 +13,9 @@ private fun optionMonad() {
 
 /**
  * Implementation of Option monad, to control side-effect of null/empty
- * sealed class where we define the interface that must be implemented by None in case there's no value
- *  and Some in case it has.
- * We define all common Functional API like map, flatMap, filter, foldLeft, foldRight, getOrElse, isDefined.
+ * sealed class where we define the API that must be implemented by None in case there's no value and Some in case it has.
+ * We define all common [FunctionalAPI] like map, flatMap, filter, foldLeft, foldRight, getOrElse, isDefined
+ * for Option monad.
  */
 sealed class Option<T> : FunctionalAPI<Option<*>, T> {
     companion object {
@@ -31,6 +31,8 @@ sealed class Option<T> : FunctionalAPI<Option<*>, T> {
     abstract override fun <B> flatMap(func: (T) -> Option<B>): Option<B>
 
     abstract override fun filter(func: (T) -> Boolean): Option<T>
+
+    abstract fun <B> fold(ifEmpty: B, func: (T) -> B): Option<B>
 
     abstract fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B>
 
@@ -70,10 +72,26 @@ class Some<T>(private val value: T) : Option<T>() {
         return if (func(value)) Some(value) else None()
     }
 
+    /**
+     * fold function where we receive the default value in case it does not exist value in option,
+     * and a function to apply over the value in case it exist.
+     */
+    override fun <B> fold(ifEmpty: B, func: (T) -> B): Option<B> {
+        return Some(func(value))
+    }
+
+    /**
+     * Function to make composition between the value in the option and the one passed as first argument.
+     * The second argument is a function that pass the new element first and then the one in the monad
+     */
     override fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B> {
         return Some(func(v, value))
     }
 
+    /**
+     * Function to make composition between the value in the option and the one passed as first argument.
+     * The second argument is a function that pass the one in the monad and then the new element
+     */
     override fun <B> foldRight(v: B, func: (T, B) -> B): Option<B> {
         return Some(func(value, v))
     }
@@ -121,6 +139,10 @@ class None<T> : Option<T>() {
         return None()
     }
 
+    override fun <B> fold(ifEmpty: B, func: (T) -> B): Option<B> {
+        return Some(ifEmpty)
+    }
+
     override fun <B> foldLeft(v: B, func: (B, T) -> B): Option<B> {
         return None()
     }
@@ -128,6 +150,7 @@ class None<T> : Option<T>() {
     override fun <B> foldRight(v: B, func: (T, B) -> B): Option<B> {
         return None()
     }
+
 }
 
 /**
@@ -153,6 +176,11 @@ private fun noneExample() {
         is Some -> none.value()
         else -> "Nothing here"
     })
+
+    val fold: Option<String> = Option.of("")
+            .fold("No values!!", { value -> value.toUpperCase() })
+    println(fold.getOrElse(""))
+
 }
 
 private fun someExample() {
