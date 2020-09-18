@@ -3,7 +3,7 @@ package main.kotlin.monads
 /**
  * Genetic interface for all Functional effects monads.
  */
-interface FunctionalAPI<F, T> {
+interface FunctionalAPI<F, out T> {
 
     fun <B> map(func: (T) -> B): F
 
