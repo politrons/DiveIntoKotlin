@@ -3,6 +3,7 @@ package main.kotlin
 
 fun main() {
     higherOrderFunc { value -> value == "hello" }
+    higherOrderFunc(::isHello)
     println(higherOrderFuncReturnFun("politrons")("politrons"))
     foldFunction()
     println(upperCaseFunc)
@@ -15,6 +16,10 @@ fun main() {
     println(isMyNameFunc("politrons"))
     println(inferredFunc(10, "x"))
     println(compositionResult)
+}
+
+fun isHello(value:String):Boolean {
+    return value == "hello"
 }
 
 /**
@@ -34,6 +39,7 @@ fun higherOrderFuncReturnFun(value: String): (String) -> String {
         else -> { s: String -> "hello $s who are you?" }
     }
 }
+
 
 /**
  * Fold in Kotlin works just like in all functional language, we pass a constructor element as first argument,
