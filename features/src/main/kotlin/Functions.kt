@@ -3,7 +3,7 @@ package main.kotlin
 
 fun main() {
     higherOrderFunc { value -> value == "hello" }
-    higherOrderFunc(::isHello)
+    higherOrderFunc(::isHello) //Using :: we can pass fun function without being evaluated
     println(higherOrderFuncReturnFun("politrons")("politrons"))
     foldFunction()
     println(upperCaseFunc)
