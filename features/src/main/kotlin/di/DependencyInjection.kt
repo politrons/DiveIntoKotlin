@@ -35,11 +35,10 @@ class CalendarRepository {
  * Declaration of DI module
  * -------------------------
  * We declare inside the module all dependencies.
- * If we define an instance as single without expose an interface <I> means is an internal
- * dependency to be used for another that it will need for his construction.
- * it can be reference using [get()] from another dependency declaration, that has
- * also that dependency.
- * In case we define a single<I> I is the dependency that can be injected outside.
+ * If we define an instance as single without expose an interface <Interface> means is an internal
+ * dependency to be used for another that it will needed for his construction.
+ * Another single dependency it can reference another dependency using [get()]
+ * In case we define a single<Interface> Interface is the dependency that can be injected outside.
  */
 val calendarModule = module {
     single<CalendarService> { CalendarServiceImpl(get()) }
