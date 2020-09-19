@@ -34,5 +34,12 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 
 ## Functional effects
 
+![alt text](img/pure.png) 
+
 * **[Option](features/src/main/kotlin/monads/OptionMonad.kt)**
 
+![alt text](img/koin.png) 
+
+## Koin Dependency injection
+
+* **[Dependency injection](features/src/main/kotlin/di/DependencyInjection.kt)**

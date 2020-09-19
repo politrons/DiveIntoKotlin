@@ -6,6 +6,7 @@ fun main() {
     nullPointerNotAllowed()
     letFeature()
     lazyVariable()
+    extractFromDataClass()
     nothingToAvoidContinuation()
 }
 
@@ -102,3 +103,15 @@ fun lazyVariable() {
     println("fast print")
     println(calNumber)
 }
+
+/**
+ * From Data class returned from a function, we can extract each element of
+ * the Data class returned independently from the invocation
+ */
+fun extractFromDataClass(){
+    val (name, age) = Foo("Fighters", 39)
+    println(name)
+    println(age)
+}
+
+data class Foo(val name:String, val age:Int)

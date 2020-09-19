@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file:///production/features" />
+    <output-test url="file:///test/features" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludePattern pattern="elm-stuff" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
