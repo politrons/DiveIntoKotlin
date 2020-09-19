@@ -40,6 +40,8 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 
 ![alt text](img/koin.png) 
 
-## Koin Dependency injection
+## Koin 
 
+ Lightweight dependency injection framework
+ 
 * **[Dependency injection](features/src/main/kotlin/di/DependencyInjection.kt)**
