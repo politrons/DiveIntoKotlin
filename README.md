@@ -34,6 +34,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 ## Patterns
 
 * **[Subscriber](features/src/main/kotlin/patterns/PublisherClass.kt)**
+* **[Decorator](features/src/main/kotlin/patterns/DecoratorPattern.kt)**
 
 ![alt text](img/pure.png) 
 
