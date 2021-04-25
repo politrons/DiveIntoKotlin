@@ -28,10 +28,10 @@ fun main() {
  * Once we have the subscriber we invoke the interface function and we pass the generic data.
  */
 class PublisherClass {
-    private val subscribers: MutableMap<Int, SubscriberClass> = mutableMapOf()
+    private val subscribers: MutableMap<Int, Subscriber> = mutableMapOf()
 
-    fun addSubscriber(id: Int, subscriberClass: SubscriberClass) {
-        subscribers[id] = subscriberClass
+    fun addSubscriber(id: Int, subscriber: Subscriber) {
+        subscribers[id] = subscriber
     }
 
     fun <T> invokeSubscriber(id: Int, data: T) {
@@ -43,28 +43,28 @@ class PublisherClass {
 }
 
 /**
- * In this class we define the interface [SubscriberClass] that have thr generic [invoke] function.
+ * In this class we define the interface [Subscriber] that have thr generic [invoke] function.
  * We create [StringSubscriber] and also [IntSubscriber] that implement [invoke]
  */
-interface SubscriberClass {
+interface Subscriber {
     fun <T> invoke(data: T)
 }
 
-class StringSubscriber : SubscriberClass {
+class StringSubscriber : Subscriber {
     override fun <String> invoke(data: String) {
         println("Data:$data")
         println("Doing some logic in String subscriber")
     }
 }
 
-class IntSubscriber : SubscriberClass {
+class IntSubscriber : Subscriber {
     override fun <Int> invoke(data: Int) {
         println("Data:$data")
         println("Doing some logic in Int subscriber")
     }
 }
 
-class UserSubscriber : SubscriberClass {
+class UserSubscriber : Subscriber {
     override fun <User> invoke(data: User) {
         println("Data:$data")
         println("Doing some logic in User subscriber")
