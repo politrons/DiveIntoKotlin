@@ -13,18 +13,18 @@ fun main() {
 
 /**
  * Decorator patter is an implementation of a class that receive in constructor another class that it
- * will use internally when the functions are invoked.
+ * will use internally adding some functionality when the functions are invoked.
  * Having this we can have an implementation of [HumanInfo] without have to know about the implementation
  * of [Human] so we can have IoC
  */
 class HumanInfo(private val human: Human) {
 
     fun sayName(): String {
-        return human.sayName()
+        return "My name is ${human.sayName()}"
     }
 
-    fun saySex(): Sex {
-        return human.saySex()
+    fun saySex(): String {
+        return "My sex is ${human.saySex()}"
     }
 }
 
