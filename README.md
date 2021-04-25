@@ -26,15 +26,17 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[IO](features/src/main/kotlin/arrow/FunctionalEffects.kt)**
 
 ![alt text](img/ktor.png) 
-
 ## Ktor
 * **[Server](features/src/main/kotlin/ktor/Server.kt)**
+
+
+## Patterns
+
+* **[Subscriber](features/src/main/kotlin/patterns/SubscriberPattern.kt)**
 
 ![alt text](img/pure.png) 
 
 ## Functional effects
-
-![alt text](img/pure.png) 
 
 * **[Option](features/src/main/kotlin/monads/OptionMonad.kt)**
 
