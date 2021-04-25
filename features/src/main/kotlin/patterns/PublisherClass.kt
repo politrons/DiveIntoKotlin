@@ -10,9 +10,12 @@ fun main() {
     val publisher = PublisherClass()
     publisher.addSubscriber(1, StringSubscriber())
     publisher.addSubscriber(2, IntSubscriber())
+    publisher.addSubscriber(3, UserSubscriber())
+
 
     publisher.invokeSubscriber(1, "Something happens wake up")
     publisher.invokeSubscriber(2, 1981)
+    publisher.invokeSubscriber(3, User("politrons", 40))
 
     //Wait for Async process to finish
     Thread.sleep(1000)
@@ -60,6 +63,15 @@ class IntSubscriber : SubscriberClass {
         println("Doing some logic in Int subscriber")
     }
 }
+
+class UserSubscriber : SubscriberClass {
+    override fun <User> invoke(data: User) {
+        println("Data:$data")
+        println("Doing some logic in User subscriber")
+    }
+}
+
+data class User(val name: String, val age: Int)
 
 
 
