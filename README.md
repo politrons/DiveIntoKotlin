@@ -35,6 +35,8 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 
 * **[Subscriber](features/src/main/kotlin/patterns/PublisherClass.kt)**
 * **[Decorator](features/src/main/kotlin/patterns/DecoratorPattern.kt)**
+* **[Strategy](features/src/main/kotlin/patterns/StrategyPattern.kt)**
+
 
 ![alt text](img/pure.png) 
 

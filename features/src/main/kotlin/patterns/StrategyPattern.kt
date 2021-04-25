@@ -3,12 +3,12 @@ package main.kotlin.patterns
 import main.kotlin.upperCaseFunc
 
 /**
- * Similar to [Decorator] patter but not extending any function and using functions.
+ * Similar to [Decorator] patter but not adding any functionality, just invoking the function received.
  * With [Strategy] patter we implement a class that receive a function in constructor, which
  * have no idea what it does. Only that receive some arguments with a type and return a type.
  *
  * Then is responsibility of the consumer of this class to implement the function and pass in the creation
- * of the class
+ * of the class, then once invoke the method of this class, pass the arguments to be passed into the function.
  */
 fun main() {
 
