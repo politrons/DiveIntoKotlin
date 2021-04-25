@@ -33,7 +33,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 
 ## Patterns
 
-* **[Subscriber](features/src/main/kotlin/patterns/SubscriberPattern.kt)**
+* **[Subscriber](features/src/main/kotlin/patterns/PublisherClass.kt)**
 
 ![alt text](img/pure.png) 
 
