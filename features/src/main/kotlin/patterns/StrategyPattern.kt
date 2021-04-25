@@ -27,7 +27,7 @@ typealias Strategy = (String, String) -> String
 class ManageStrategy(private val strategy: Strategy) {
 
     fun run(a: String, b: String) {
-        println(strategy.invoke(a, b))
+        println(strategy(a, b))
     }
 }
 
