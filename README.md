@@ -29,6 +29,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 ## Ktor
 * **[Server](features/src/main/kotlin/ktor/Server.kt)**
 
+![alt text](img/design.png) 
 
 ## Patterns
 
