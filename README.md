@@ -37,6 +37,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[Decorator](features/src/main/kotlin/patterns/DecoratorPattern.kt)**
 * **[Strategy](features/src/main/kotlin/patterns/StrategyPattern.kt)**
 * **[Chain of Responsibility](features/src/main/kotlin/patterns/ChainOfResponsibilityPattern.kt)**
+* **[Command](features/src/main/kotlin/patterns/CommandPattern.kt)**
 
 ![alt text](img/pure.png) 
 
