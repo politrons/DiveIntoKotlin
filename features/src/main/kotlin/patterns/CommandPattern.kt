@@ -6,9 +6,7 @@ import main.kotlin.upperCaseFunc
 /**
  * In [Command] pattern we create all functions with same signature [A -> B]
  * Then we create a class that receive in constructor that Command signature [A -> B]
- * and implement an [apply] function that receiver this type [A] and return [B]
- * Having this we can have this generic [ManageCommand] that cvan have different behavior depending of this
- * [Command] we pass in the constructor
+ * and implement an [apply] function that receive this type [A] and return [B]
  */
 fun main() {
     ManageCommand(lowerCaseStringFunc).apply("HELLO WORLD")
@@ -27,6 +25,8 @@ val higherOrderFunc: (String) -> (Int) -> String = { a -> println("$a creating f
 
 /**
  * Class that it created with a [Command] and invoke this command once the [apply] function is invoked.
+ * Having this class we can have this generic implementation that can have different behavior depending of the
+ * [Command] we pass in the constructor
  */
 class ManageCommand<A, B>(val command: (A) -> B) {
     fun apply(value: A): B {
