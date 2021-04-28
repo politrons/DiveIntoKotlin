@@ -15,9 +15,9 @@ object SingletonObject {
 }
 
 /**
- * A most verbose and not recommended way to do it, is how we would implement the pattern in Java.
- * We create a static access in the class using companion object where we insantiate the class,
- * and we store in a mutable variable, so it means it have to be a possible nullable value,
+ * A most verbose and [not recommended] way to do it, is how we would implemented the pattern in Java.
+ * We create a static access in the class using [companion object] where we instantiate the class,
+ * and we store in a mutable variable, so it means it have to be a possible nullable variable,
  * which is the reason we mark the return class type with [?]
  */
 class SingletonClass private constructor(val value: String) {
