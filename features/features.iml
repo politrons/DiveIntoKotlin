@@ -85,5 +85,37 @@
     <orderEntry type="library" name="Maven: org.koin:koin-ktor:2.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.koin:koin-core-ext:2.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.koin:koin-core:2.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.pulsar:pulsar-client:2.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.pulsar:pulsar-client-api:2.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.pulsar:pulsar-transaction-common:2.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java-util:3.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.pulsar:protobuf-shaded:2.1.0-incubating" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
+    <orderEntry type="library" name="Maven: io.airlift:aircompressor:0.16" level="project" />
+    <orderEntry type="library" name="Maven: javax.ws.rs:javax.ws.rs-api:2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.pulsar:bouncy-castle-bc-shaded:2.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.activation:javax.activation:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.pulsar:pulsar-client-admin:2.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.19" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.avro:avro-protobuf:1.9.1" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.2" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:jul-to-slf4j:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.avro:avro:1.10.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.7.30" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.9.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9" level="project" />
   </component>
 </module>

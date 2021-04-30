@@ -53,3 +53,12 @@ Is this repo useful? Please ⭑Star this repository and share the love.
  Lightweight dependency injection framework
  
 * **[Dependency injection](features/src/main/kotlin/di/DependencyInjection.kt)**
+
+![alt text](img/pulsar.png) 
+
+## Pulsar 
+
+A cloud-native, distributed messaging and streaming platform
+ 
+* **[Dependency injection](features/src/main/kotlin/pulsar/PulsarFeature.kt)**
+
