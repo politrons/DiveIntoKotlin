@@ -10,6 +10,9 @@ import org.apache.pulsar.client.api.Schema
 import java.util.*
 
 /**
+ * If I have seen further it is by standing on the shoulders of giants.
+ * Code based on previous example repo. https://github.com/ypt/experiment-kotlin-pulsar
+ *
  * In order to execute this example of Producer and Consumer with [Pulsar] you will need [Docker] and
  * run the Pulsar image
  *
