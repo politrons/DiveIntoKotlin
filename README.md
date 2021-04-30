@@ -60,5 +60,5 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 
 A cloud-native, distributed messaging and streaming platform
  
-* **[Dependency injection](features/src/main/kotlin/pulsar/PulsarFeature.kt)**
+* **[Publisher-Subscriber](features/src/main/kotlin/pulsar/PulsarFeature.kt)**
 
