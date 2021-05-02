@@ -45,6 +45,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 ## Functional effects
 
 * **[Option](features/src/main/kotlin/monads/OptionMonad.kt)**
+* **[Try](features/src/main/kotlin/monads/TryMonad.kt)**
 
 ![alt text](img/koin.png) 
 
