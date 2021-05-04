@@ -1,5 +1,11 @@
 package main.kotlin
 
+/**
+ * [Phantom types] is just a pattern where using [Generic types] and [Extension function],
+ * we can create some function that are only available for a specific class with a specific generic type.
+ * Having this, we can change from one state to another, making available new function and making disable others
+ * that were available before.
+ */
 fun main() {
     val circuitBreaker: CircuitBreaker<Open> = CircuitBreaker(Open)
     val halfOpen: CircuitBreaker<HalfOpen> = circuitBreaker.halfOpen()
@@ -21,7 +27,7 @@ object HalfOpen : State()
 object Close : State()
 
 /**
- * Class that with a covariant type of [State] that define the state of the [CircuitBreaker]
+ * Class with a covariant type of [State] that define the state of the [CircuitBreaker]
  */
 class CircuitBreaker<out T : State>(val state: T)
 
