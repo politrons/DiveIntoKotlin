@@ -39,6 +39,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[Chain of Responsibility](features/src/main/kotlin/patterns/ChainOfResponsibilityPattern.kt)**
 * **[Command](features/src/main/kotlin/patterns/CommandPattern.kt)**
 * **[Singleton](features/src/main/kotlin/patterns/SingletonPattern.kt)**
+* **[Phantom types](features/src/main/kotlin/patterns/PhantomTypes.kt)**
 
 ![alt text](img/pure.png) 
 

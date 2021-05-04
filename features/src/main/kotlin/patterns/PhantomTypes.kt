@@ -1,7 +1,7 @@
-package main.kotlin
+package main.kotlin.patterns
 
 /**
- * [Phantom types] is just a pattern where using [Generic types] and [Extension function],
+ * [Phantom types] is a technique normally used in Builder pattern where using [Generic types] and [Extension function],
  * we can create some function that are only available for a specific class with a specific generic type.
  * Having this, we can change from one state to another, making available new function and making disable others
  * that were available before.
