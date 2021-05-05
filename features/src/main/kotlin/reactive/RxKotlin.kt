@@ -18,10 +18,16 @@ fun main() {
     futureCreation()
     collectionCreation()
     filterCollection()
+    collectionMapAndFlatMap()
     collectionScan()
     collectionCollect()
     collectionBackpressure()
 }
+
+/**
+ * CREATING
+ * --------
+ */
 
 /**
  * Using [Single.just] we can create the Single<T>.
@@ -92,25 +98,49 @@ private fun collectionCreation() {
 }
 
 /**
+ * FILTERING
+ * ----------
+ */
+/**
  * With the same operators we have in all reactive paradigm api we filter using
  * [filter] operator to allow go through values passing a specific predicate function.
  * [takeWhile] operator to run the observable while the predicate condition is passed
  * [take] operator to specify the number of elements you want to pick up.
+ * [distinct] operator to skip all elements duplicated in the emission.
+ * [skip] operator to skip the first number of elements in the emission.
  */
 private fun filterCollection() {
-    listOf("hello", "?", "reactive", "world", "12", "from", "kotlin").toObservable()
+    listOf("1", "2", "3", "hello", "hello", "?", "reactive", "world", "world", "12", "from", "kotlin").toObservable()
         .filter { s -> s.length > 4 }
         .takeWhile { s ->
             s.contains("hello") ||
                     s.contains("kotlin") ||
                     s.contains("world")
         }
+        .distinct()
+        .skip(3)
         .take(1)
         .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
- * With Collection we can have a foldable operator, in which we can receive the accumulator type,
+ * TRANSFORMING
+ * ------------
+ */
+
+/**
+ * [map] operator is used to transform the elements emitted in the Stream.
+ * [flatMap] operator is used to make composition between one element emitted in the stream and another stream
+ */
+private fun collectionMapAndFlatMap() {
+    listOf("hello", "reactive", "world").toObservable()
+        .map { a -> upperCaseFunc(a) }
+        .flatMap { s -> Observable.just("-${s}-") }
+        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+ * With [scan] operator we can have a foldable operator, in which we can receive the accumulator type,
  * and each emission of the Observable.
  */
 private fun collectionScan() {
