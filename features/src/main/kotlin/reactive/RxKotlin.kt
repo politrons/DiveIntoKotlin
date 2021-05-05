@@ -1,5 +1,6 @@
 package main.kotlin.reactive
 
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.toObservable
@@ -12,6 +13,7 @@ import java.util.concurrent.CompletableFuture
  */
 fun main() {
     singleCreation()
+    maybeCreation()
     justCreation()
     futureCreation()
     collectionCreation()
@@ -30,6 +32,22 @@ fun main() {
  */
 private fun singleCreation() {
     Single.just("Hello single reactive world from Kotlin")
+        .filter { s -> s.length > 10 }
+        .map { s -> upperCaseFunc(s) }
+        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+ * Using [Maybe] we can guarantee that maybe there's emission, none or an exception once we subscribe and
+ * we create the [Disposable]
+ */
+private fun maybeCreation() {
+    Maybe.just("Hello maybe reactive world from Kotlin")
+        .filter { s -> s.length > 10 }
+        .map { s -> upperCaseFunc(s) }
+        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+
+    Maybe.empty<String>()
         .filter { s -> s.length > 10 }
         .map { s -> upperCaseFunc(s) }
         .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
