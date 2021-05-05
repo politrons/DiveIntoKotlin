@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.toObservable
 import main.kotlin.upperCaseFunc
-import java.util.stream.Collector
+import java.util.concurrent.CompletableFuture
 
 /**
  * RxKotlin is basically an extension of RxJava, to allow Reactive programing in Kotlin using
@@ -13,6 +13,7 @@ import java.util.stream.Collector
 fun main() {
     singleCreation()
     justCreation()
+    futureCreation()
     collectionCreation()
     filterCollection()
     collectionScan()
@@ -47,6 +48,16 @@ private fun justCreation() {
         .filter { s -> s.length > 10 }
         .map { s -> upperCaseFunc(s) }
         .flatMap { s -> Observable.just("$s!!!!") }
+        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+ * [fromFuture] operator take a java [Future], and once the future is complete the value
+ * in the callback is passed into the [Observable]
+ */
+private fun futureCreation() {
+    Observable.fromFuture(CompletableFuture.supplyAsync { "Hello reactive world from the Future" })
+        .map { s -> upperCaseFunc(s) }
         .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
 }
 
