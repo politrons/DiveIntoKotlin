@@ -3,6 +3,7 @@ package main.kotlin.reactive
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.kotlin.toObservable
 import main.kotlin.upperCaseFunc
 import java.util.concurrent.CompletableFuture
@@ -22,6 +23,8 @@ fun main() {
     collectionScan()
     collectionCollect()
     collectionBackpressure()
+    collectionMerge()
+    zipOperator()
 }
 
 /**
@@ -171,4 +174,30 @@ private fun collectionBackpressure() {
     listOf("backpressure", "in", "reactive", "world").toObservable()
         .buffer(2)
         .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+ * COMBINING
+ * ---------
+ */
+
+/**
+[mergeWith] operator allow us to combine two observables and emit each element of the observables,
+in the same order are defined.
+ */
+private fun collectionMerge() {
+    listOf("hello", "reactive").toObservable()
+        .mergeWith(listOf("world", "!!!").toObservable())
+        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+[zipOperator] operator allow us to combine two observables and combine each element of the observables
+in a [BiFunction] defined after each zip.
+ */
+private fun zipOperator() {
+    Observable.just("hello")
+        .zipWith(Observable.just("world"), BiFunction { a: String, b: String -> "$a-$b" })
+        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+
 }
