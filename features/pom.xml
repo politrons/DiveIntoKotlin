@@ -190,6 +190,13 @@
             <version>2.9.9</version>
         </dependency>
 
+        <!-- ReactiveX-->
+        <dependency>
+            <groupId>io.reactivex.rxjava3</groupId>
+            <artifactId>rxkotlin</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>
