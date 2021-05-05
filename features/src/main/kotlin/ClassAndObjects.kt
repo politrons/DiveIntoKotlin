@@ -8,6 +8,9 @@ fun main() {
     println(ClassNotInstantiateByConstructor.create())
     println(SonClass().getNumber())
     println(MyFirstInterfaceImpl().getName())
+    val (name, age) = returnMultiValueFromDataClass()
+    println(name)
+    println(age)
     copyClassValue()
     val man: Human = Man("politrons")
     println(man)
@@ -28,7 +31,7 @@ fun main() {
 /**
  * To allow null types you need to specify [?] at the end of the type
  */
-val nullAllowed:String? = null
+val nullAllowed: String? = null
 
 /**
  * Just like in all JVM lang classes are created with keyword [class]
@@ -137,8 +140,17 @@ fun copyClassValue() {
  * Just like in Scala with sealed trait
  */
 sealed class Human
-data class Man(val name: String) : Human()
-data class Woman(val name: String) : Human()
+data class Man(val name: String, val age: Int = 40) : Human()
+data class Woman(val name: String, val age: Int = 40) : Human()
+
+/**
+ * When you return a class instance, from the invoker side, you cam unwrap the values from
+ * the instance.
+ *     val (name, age) = returnMultiValueFromDataClass()
+ */
+fun returnMultiValueFromDataClass(): Man {
+    return Man("politrons", 40)
+}
 
 /**
  * Just like Java enums
