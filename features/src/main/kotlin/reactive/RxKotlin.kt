@@ -43,7 +43,7 @@ private fun singleCreation() {
     Single.just("Hello single reactive world from Kotlin")
         .filter { s -> s.length > 10 }
         .map { s -> upperCaseFunc(s) }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Single:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -54,12 +54,12 @@ private fun maybeCreation() {
     Maybe.just("Hello maybe reactive world from Kotlin")
         .filter { s -> s.length > 10 }
         .map { s -> upperCaseFunc(s) }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Maybe:$s") }, { t -> println("Error channel:$t") })
 
     Maybe.empty<String>()
         .filter { s -> s.length > 10 }
         .map { s -> upperCaseFunc(s) }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Maybe:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -75,7 +75,7 @@ private fun justCreation() {
         .filter { s -> s.length > 10 }
         .map { s -> upperCaseFunc(s) }
         .flatMap { s -> Observable.just("$s!!!!") }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Just:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -85,7 +85,7 @@ private fun justCreation() {
 private fun futureCreation() {
     Observable.fromFuture(CompletableFuture.supplyAsync { "Hello reactive world from the Future" })
         .map { s -> upperCaseFunc(s) }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Future:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -97,7 +97,7 @@ private fun collectionCreation() {
         .filter { s -> s.length > 4 }
         .map { s -> upperCaseFunc(s) }
         .flatMap { s -> Observable.just("$s!!!!") }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Collector:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -123,7 +123,7 @@ private fun filterCollection() {
         .distinct()
         .skip(3)
         .take(1)
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Filter operator:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -139,7 +139,7 @@ private fun collectionMapAndFlatMap() {
     listOf("hello", "reactive", "world").toObservable()
         .map { a -> upperCaseFunc(a) }
         .flatMap { s -> Observable.just("-${s}-") }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("MapAndFlatMap:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -149,7 +149,7 @@ private fun collectionMapAndFlatMap() {
 private fun collectionScan() {
     listOf("hello", "reactive", "world").toObservable()
         .scan { acc, next -> "$acc-$next" }
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Scan operator:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -160,7 +160,7 @@ private fun collectionCollect() {
     listOf("hello", "reactive", "world", "in", "one", "collection").toObservable()
         .map { s -> "_${s}_" }
         .collectInto(mutableListOf<String>(), { list, value -> list.add(value) })
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Collect operator:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -173,7 +173,7 @@ private fun collectionCollect() {
 private fun collectionBackpressure() {
     listOf("backpressure", "in", "reactive", "world").toObservable()
         .buffer(2)
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Buffer operator:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -183,12 +183,12 @@ private fun collectionBackpressure() {
 
 /**
 [mergeWith] operator allow us to combine two observables and emit each element of the observables,
-in the same order are defined.
+iin the same order are defined.
  */
 private fun collectionMerge() {
     listOf("hello", "reactive").toObservable()
         .mergeWith(listOf("world", "!!!").toObservable())
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
+        .subscribe({ s -> println("Merge operator:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -198,6 +198,5 @@ in a [BiFunction] defined after each zip.
 private fun zipOperator() {
     Observable.just("hello")
         .zipWith(Observable.just("world"), BiFunction { a: String, b: String -> "$a-$b" })
-        .subscribe({ s -> println("Succeed Channel:$s") }, { t -> println("Error channel:$t") })
-
+        .subscribe({ s -> println("Zip operator:$s") }, { t -> println("Error channel:$t") })
 }
