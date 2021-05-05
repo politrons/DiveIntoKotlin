@@ -25,10 +25,6 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[Monads](features/src/main/kotlin/arrow/MonadsEffects.kt)**
 * **[IO](features/src/main/kotlin/arrow/FunctionalEffects.kt)**
 
-![alt text](img/ktor.png) 
-## Ktor
-* **[Server](features/src/main/kotlin/ktor/Server.kt)**
-
 ![alt text](img/design.png) 
 
 ## Patterns
@@ -54,6 +50,10 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 
 * **[Flow](features/src/main/kotlin/reactive/Flows.kt)**
 * **[RxKotlin](features/src/main/kotlin/reactive/RxKotlin.kt)**
+
+![alt text](img/ktor.png) 
+## Ktor
+* **[Server](features/src/main/kotlin/ktor/Server.kt)**
 
 ![alt text](img/koin.png) 
 
