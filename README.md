@@ -48,6 +48,13 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[Option](features/src/main/kotlin/monads/OptionMonad.kt)**
 * **[Try](features/src/main/kotlin/monads/TryMonad.kt)**
 
+![alt text](img/flatMap.png) 
+
+## Reactive programing
+
+* **[Flow](features/src/main/kotlin/reactive/Flows.kt)**
+* **[RxKotlin](features/src/main/kotlin/reactive/RxKotlin.kt)**
+
 ![alt text](img/koin.png) 
 
 ## Koin 

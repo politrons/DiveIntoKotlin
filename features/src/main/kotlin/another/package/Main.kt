@@ -1,7 +1,7 @@
 package main.kotlin.another.`package`
 
 import kotlinx.coroutines.runBlocking
-import main.kotlin.bulkHeadPattern
+import main.kotlin.reactive.bulkHeadPattern
 import main.kotlin.creationList
 import main.kotlin.printAllTypes
 import main.kotlin.simpleChannel

@@ -1,4 +1,4 @@
-package main.kotlin
+package main.kotlin.reactive
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
