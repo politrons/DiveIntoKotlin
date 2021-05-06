@@ -17,6 +17,7 @@ fun main() {
     maybeCreation()
     justCreation()
     futureCreation()
+    deferCreation()
     collectionCreation()
     filterCollection()
     collectionMapAndFlatMap()
@@ -26,6 +27,7 @@ fun main() {
     collectionMerge()
     collectionConcat()
     zipOperator()
+    switchOperator()
 }
 
 /**
@@ -87,6 +89,20 @@ private fun futureCreation() {
     Observable.fromFuture(CompletableFuture.supplyAsync { "Hello reactive world from the Future" })
         .map { s -> upperCaseFunc(s) }
         .subscribe({ s -> println("Future:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+ * Normally when you create an observable with just or create, The observable is created with the value that passed at that point,
+ * and then once that constantClass observer subscribe, the value it´s just passed through the pipeline.
+ * Sometimes that´s not the desirable, since maybe we dont want to  create the observable at that point, only when an observer subscribe to it.
+ * Defer it will wait to create the observable with the value when we subscribe our observer.
+ * Basically create this Observable that wrap the observable that we want to create only when we subscribe to the observable.
+ */
+private fun deferCreation() {
+    val observable = Observable.defer { Observable.just(System.currentTimeMillis()) }
+    println("Defer Now ${System.currentTimeMillis()}")
+    observable
+        .subscribe({ s -> println("Defer:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
@@ -210,4 +226,13 @@ private fun zipOperator() {
     Observable.just("hello")
         .zipWith(Observable.just("world"), BiFunction { a: String, b: String -> "$a-$b" })
         .subscribe({ s -> println("Zip operator:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+[switchIfEmpty] operator allow us to emmit elements from another observable in case the original is empty.
+ */
+private fun switchOperator() {
+    Observable.empty<String>()
+        .switchIfEmpty(Observable.just("hello marte"))
+        .subscribe({ s -> println("Switch operator:$s") }, { t -> println("Error channel:$t") })
 }
