@@ -24,6 +24,7 @@ fun main() {
     collectionCollect()
     collectionBackpressure()
     collectionMerge()
+    collectionConcat()
     zipOperator()
 }
 
@@ -182,13 +183,23 @@ private fun collectionBackpressure() {
  */
 
 /**
-[mergeWith] operator allow us to combine two observables and emit each element of the observables,
-iin the same order are defined.
+[mergeWith] operator allow us to flatten two observables and emit each element of the observables,
+in the same order are defined as a sequence.
  */
 private fun collectionMerge() {
     listOf("hello", "reactive").toObservable()
         .mergeWith(listOf("world", "!!!").toObservable())
         .subscribe({ s -> println("Merge operator:$s") }, { t -> println("Error channel:$t") })
+}
+
+/**
+[collectionConcat] operator allow us to combine two observables and emit each element of the observables,
+iin the same order are defined.
+ */
+private fun collectionConcat() {
+    listOf("hello", "reactive").toObservable()
+        .concatWith(listOf("world", "!!!").toObservable())
+        .subscribe({ s -> println("Concat operator:$s") }, { t -> println("Error channel:$t") })
 }
 
 /**
