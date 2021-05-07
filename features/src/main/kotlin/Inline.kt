@@ -24,8 +24,8 @@ override fun invoke(n: Int) {
  *
  * Benchmark result:
  *
- * NonInline time for 1000000000 iteration function execution -> 403 ms
- * Inline time for 1000000000 iteration function execution -> 1205 ms
+ * NonInline time for 1000000000 iteration function execution -> 1205 ms
+ * Inline time for 1000000000 iteration function execution -> 403 ms
  */
 fun main() {
     var time = System.currentTimeMillis()
