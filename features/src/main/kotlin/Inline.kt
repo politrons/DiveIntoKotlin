@@ -39,7 +39,7 @@ fun main() {
     }
     println("NonInline time: ${System.currentTimeMillis() - time}")
 
-    val classA:GenericClass = ClassA()
+    val classA: GenericClass = ClassA()
     println("Is Same type: ${classA.isSameType<ClassA>()}")
     println("Is Same type: ${classA.isSameType<ClassB>()}")
 }

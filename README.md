@@ -18,6 +18,7 @@ Is this repo useful? Please ⭑Star this repository and share the love.
 * **[Channels](features/src/main/kotlin/Channels.kt)**
 * **[Infix](features/src/main/kotlin/Infix.kt)**
 * **[When condition](features/src/main/kotlin/WhenCondition.kt)**
+* **[Inline](features/src/main/kotlin/Inline.kt)**
 
 ![alt text](img/arrow.png) 
 
