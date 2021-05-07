@@ -1,5 +1,9 @@
 package main.kotlin
 
+/**
+ * INLINE FUNCTION
+ * ----------------
+ */
 
 /**
  * Normally in JVM when we use lambdas it's an anonymous class of interface FunctionN which means when
@@ -7,16 +11,16 @@ package main.kotlin
  * The code you see below it looks like:
  *
  * public static final void nonInlineFunction(Int value,Function1 func) {
-        func.invoke(value)
-    }
+func.invoke(value)
+}
 
  * And the invoker of the function it creates a new instance of Function1 in each iteration
  *
-    nonInlineFunction(1, new Function1() {
-        override fun invoke(n: Int) {
-            1981 * n
-        }
-    })
+nonInlineFunction(1, new Function1() {
+override fun invoke(n: Int) {
+1981 * n
+}
+})
  *
  * Benchmark result:
  *
@@ -34,6 +38,10 @@ fun main() {
         nonInlineFunction(i) { n -> 1981 * n }
     }
     println("NonInline time: ${System.currentTimeMillis() - time}")
+
+    val classA:GenericClass = ClassA()
+    println("Is Same type: ${classA.isSameType<ClassA>()}")
+    println("Is Same type: ${classA.isSameType<ClassB>()}")
 }
 
 /**
@@ -52,4 +60,27 @@ fun nonInlineFunction(value: Int, func: (Int) -> Int) {
  */
 inline fun inlineFunction(value: Int, func: (Int) -> Int) {
     func(value)
+}
+
+/**
+ * REIFIED
+ * -------
+ */
+
+/**
+ * Inline functions also allow the use of [reified] in generic types, which allow us make check and casting
+ * over generic type without need a class, but with the generic type itself.
+ *
+ * In this example, we dont need to pass a class to the function to be used for the casting. Instead
+ *  we can use the generic type [T] as long as we mark as [reified]
+ */
+
+interface GenericClass
+
+class ClassA : GenericClass
+
+class ClassB : GenericClass
+
+inline fun <reified T> GenericClass.isSameType(): Boolean {
+    return this is T
 }
