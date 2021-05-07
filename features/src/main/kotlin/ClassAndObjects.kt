@@ -185,11 +185,13 @@ class ClassWithCompanionObject {
 }
 
 /**
- * [inline] class is how we can unbox primitive types in types keeping the performance.
+ * [value] class is how we can unbox primitive types in types keeping the performance.
  * It would be the same that in scala we do by case class(value:T) extends AnyVal
  */
-inline class Username(val value: String)
-inline class Password(val value: String)
+@JvmInline
+value class Username(val value: String)
+@JvmInline
+value class Password(val value: String)
 
 /**
  * Another feature exactly like in Scala, defining typeAlias for types, using [typealias] amd then pointing to a type
