@@ -2,6 +2,8 @@
 
 Author Pablo Perez Garcia 
 
+All the examples shown here are running with the latest Kotlin version 1.5
+
 Is this repo useful? Please ⭑Star this repository and share the love.
 
 ![alt text](img/features.png) 
