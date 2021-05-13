@@ -20,7 +20,7 @@
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+        <!--        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -182,12 +182,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.9.3</version>
+            <version>2.11.4</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <version>2.9.9</version>
+            <version>2.11.4</version>
         </dependency>
 
         <!-- ReactiveX-->
@@ -196,6 +196,26 @@
             <artifactId>rxkotlin</artifactId>
             <version>3.0.0</version>
         </dependency>
+
+        <!-- Spring-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.4.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+<!--        &lt;!&ndash; GraphQL&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.expediagroup</groupId>-->
+<!--            <artifactId>graphql-kotlin-spring-server</artifactId>-->
+<!--            <version>4.1.1</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 

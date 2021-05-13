@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/DiveIntoKotlin.iml" filepath="$PROJECT_DIR$/.idea/DiveIntoKotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/features/features.iml" filepath="$PROJECT_DIR$/features/features.iml" />
     </modules>
   </component>
 </project>
