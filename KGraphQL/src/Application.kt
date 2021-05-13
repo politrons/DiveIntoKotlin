@@ -15,6 +15,9 @@ fun Application.module(testing: Boolean = false) {
             query("user") {
                 resolver { -> "Hi politrons" }
             }
+            query("services") {
+                resolver { -> "login" }
+            }
         }
     }
 }
