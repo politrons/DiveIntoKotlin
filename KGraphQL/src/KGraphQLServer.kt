@@ -4,36 +4,24 @@ import com.apurebase.kgraphql.GraphQL
 import io.ktor.application.*
 
 /**
- *
- * To make a request to the service, from graphql interface [http://localhost:1981/graphql] send query like
- *
- * {
-music(band: "Depeche mode")
-}
-object:
-{
-object {a}
-}
-
+ * To make a request to the service, connect to graphql interface [http://localhost:1981/graphql]
  */
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module(testing: Boolean = false) {
     /**
      * We install the Ktor module [GraphQL] giving us as part of the DSL the
-     * possibility to create the Schema programmatically
+     * possibility to create the Schema programmatically.
+     * [playground] This adds support for opening the graphql route within the browser
      */
     install(GraphQL) {
         playground = true
 
         /**
-         * We create programmatically the schema.
+         * We create programmatically the schema usibng:
+         * [configure] allow us configure the schema config programmatically
          */
         schema {
-
-            type<AAA> {
-                description = "blablabla"
-            }
 
             /**
              * [Configure] method allows you customize schema behaviour.
@@ -46,15 +34,48 @@ fun Application.module(testing: Boolean = false) {
 
             /**
              * Here we define the API where clients can search using queries for a specific data.
+             * To search for a band albums and year by band name we do the query
+             * * {music(band:"Depeche mode") {year, album}}
+             * * where first part of the query is what we want to search [music(band:"Depeche mode")]
+             * * And the second part is what we want to obtain from the search [{year, album}]
              */
-            query("music") {
+            query("musicBand") {
                 resolver { band: String ->
                     println("Searching for band:$band Thread:${Thread.currentThread().name}")
                     when (band) {
                         "Depeche mode", "depeche mode" -> depecheModeAlbums
                         "Counting Crows", "counting crows" -> countingCrowsAlbums
-                        else -> listOf("You need to specify a band.")
+                        else -> listOf(Music("You need to specify a band.", 0))
                     }
+                }
+            }
+
+            /**
+             * To search for a band albums and year by album we do the query
+             * *  music(year:1998) {year, album}
+             */
+            query("musicAlbum") {
+                resolver { album: String ->
+                    println("Searching for year:$album Thread:${Thread.currentThread().name}")
+                    allAlbums.filter { music -> music.album == album }
+                }
+            }
+
+            /**
+             * To search for a band albums and year by year we do the query
+             * *  music(year:1998) {year, album}
+             */
+            query("musicYear") {
+                resolver { year: Int ->
+                    println("Searching for year:$year Thread:${Thread.currentThread().name}")
+                    allAlbums.filter { music -> music.year == year }
+                }
+            }
+
+            query("musicAlbumYear") {
+                resolver { year: Int, album: String ->
+                    println("Searching for year:$year Thread:${Thread.currentThread().name}")
+                    allAlbums.filter { music -> music.year == year || music.album == album }
                 }
             }
 
@@ -69,10 +90,6 @@ fun Application.module(testing: Boolean = false) {
                 }
             }
 
-            query("object") {
-                resolver { -> AAA("Hello object") }
-            }
-
             query("services") {
                 resolver { -> listOf("music", "movies") }
             }
@@ -80,21 +97,37 @@ fun Application.module(testing: Boolean = false) {
     }
 }
 
-
-data class AAA(val a: String)
-
 /**
  * Music
  * ------
  */
+
+/**
+ * In kGraphQL it's mandatory use [data] class type to render resppnses.
+ */
+data class Music(val album: String, val year: Int)
+
 val countingCrowsAlbums =
-    listOf("August and everything after", "This desert life", "Hard Candy", "Recovering the Satellites")
-val depecheModeAlbums = listOf("Sound of the Universe", "Delta Machine", "Music For The Masses", "Exciter")
+    listOf(
+        Music("August and everything after", 1996),
+        Music("Recovering the Satellites", 1998),
+        Music("This desert life", 2000),
+        Music("Hard Candy", 2003)
+    )
+val depecheModeAlbums = listOf(
+    Music("Sound of the Universe", 2008),
+    Music("Delta Machine", 2011),
+    Music("Music For The Masses", 1987),
+    Music("Exciter", 2001)
+)
+
+val allAlbums = countingCrowsAlbums + depecheModeAlbums
 
 /**
  * Movies
  * -------
  */
+
 val actionMovies = listOf("Die Hard", "Breakpoint", "Speed")
 val sciFi = listOf("Avatar", "StarWars", "Solaris")
 
