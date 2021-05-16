@@ -1,6 +1,7 @@
 package com.politrons
 
 import com.apurebase.kgraphql.GraphQL
+import com.politrons.Genre.*
 import io.ktor.application.*
 
 /**
@@ -31,6 +32,12 @@ fun Application.module(testing: Boolean = false) {
                 useDefaultPrettyPrinter = true
                 timeout = 5000
             }
+
+            /**
+             * In order to be able to use an enum in the schema, we need to define the enum graphql type
+             * with the enum class defined.
+             */
+            enum<Genre>()
 
             /**
              * Here we define the API where clients can search using queries for a specific data.
@@ -82,7 +89,7 @@ fun Application.module(testing: Boolean = false) {
             query("movieGenre") {
                 resolver { genre: String ->
                     println("Searching movie by genre:$genre Thread:${Thread.currentThread().name}")
-                    allMovies.filter { movie -> movie.genre.equals(genre, ignoreCase = true) }
+                    allMovies.filter { movie -> movie.genre.name.equals(genre, ignoreCase = true) }
                 }
             }
 
@@ -126,17 +133,21 @@ val allAlbums = countingCrowsAlbums + depecheModeAlbums
  * Movies
  * -------
  */
-data class Movie(val name: String, val genre: String, val year: Int)
+enum class Genre {
+    ACTION, SCI_FI
+}
+
+data class Movie(val name: String, val genre: Genre, val year: Int)
 
 val actionMovies = listOf(
-    Movie("Die Hard", "Action", 1989),
-    Movie("Breakpoint", "Action", 1991),
-    Movie("Speed", "Action", 1995)
+    Movie("Die Hard", ACTION, 1989),
+    Movie("Breakpoint", ACTION, 1991),
+    Movie("Speed", ACTION, 1995)
 )
 val sciFi = listOf(
-    Movie("Avatar", "sci-fi", 2010),
-    Movie("StarWars", "sci-fi", 1970),
-    Movie("Solaris", "sci-fi", 2005)
+    Movie("Avatar", SCI_FI, 2010),
+    Movie("StarWars", SCI_FI, 1970),
+    Movie("Solaris", SCI_FI, 2005)
 )
 
 val allMovies = actionMovies + sciFi
