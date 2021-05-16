@@ -48,8 +48,7 @@ fun Application.module(testing: Boolean = false) {
              */
             query("musicBand") {
                 resolver { band: String ->
-                    println("Searching for band:$band Thread:${Thread.currentThread().name}")
-                    allAlbums.filter { music -> music.band.equals(band, ignoreCase = true) }
+                    allAlbums.findData { music -> music.band.equals(band, ignoreCase = true) }
                 }
             }
 
@@ -59,8 +58,7 @@ fun Application.module(testing: Boolean = false) {
              */
             query("musicAlbum") {
                 resolver { album: String ->
-                    println("Searching for year:$album Thread:${Thread.currentThread().name}")
-                    allAlbums.filter { music -> music.album == album }
+                    allAlbums.findData { music -> music.album == album }
                 }
             }
 
@@ -70,8 +68,7 @@ fun Application.module(testing: Boolean = false) {
              */
             query("musicYear") {
                 resolver { year: Int ->
-                    println("Searching for year:$year Thread:${Thread.currentThread().name}")
-                    allAlbums.filter { music -> music.year == year }
+                    allAlbums.findData { music -> music.year == year }
                 }
             }
 
@@ -81,26 +78,28 @@ fun Application.module(testing: Boolean = false) {
              */
             query("musicAlbumYear") {
                 resolver { year: Int, album: String ->
-                    println("Searching for year:$year Thread:${Thread.currentThread().name}")
-                    allAlbums.filter { music -> music.year == year || music.album == album }
+                    allAlbums.findData { music -> music.year == year || music.album == album }
                 }
             }
 
             query("movieGenre") {
                 resolver { genre: String ->
-                    println("Searching movie by genre:$genre Thread:${Thread.currentThread().name}")
-                    allMovies.filter { movie -> movie.genre.name.equals(genre, ignoreCase = true) }
+                    allMovies.findData { movie -> movie.genre.name.equals(genre, ignoreCase = true) }
                 }
             }
 
             query("movieYear") {
                 resolver { year: Int ->
-                    println("Searching movie by year:$year Thread:${Thread.currentThread().name}")
-                    allMovies.filter { movie -> movie.year == year }
+                    allMovies.findData { movie -> movie.year == year }
                 }
             }
         }
     }
+}
+
+fun <T> List<T>.findData(predicate: (T) -> Boolean): List<T> {
+    println("Searching data with function $predicate Thread:${Thread.currentThread().name}")
+    return this.filter { x -> predicate(x) }
 }
 
 /**
@@ -113,13 +112,12 @@ fun Application.module(testing: Boolean = false) {
  */
 data class Music(val band: String, val album: String, val year: Int)
 
-val countingCrowsAlbums =
-    listOf(
-        Music("counting crows", "August and everything after", 1996),
-        Music("counting crows", "Recovering the Satellites", 1998),
-        Music("counting crows", "This desert life", 2000),
-        Music("counting crows", "Hard Candy", 2003)
-    )
+val countingCrowsAlbums = listOf(
+    Music("counting crows", "August and everything after", 1996),
+    Music("counting crows", "Recovering the Satellites", 1998),
+    Music("counting crows", "This desert life", 2000),
+    Music("counting crows", "Hard Candy", 2003)
+)
 val depecheModeAlbums = listOf(
     Music("Depeche mode", "Sound of the Universe", 2008),
     Music("Depeche mode", "Delta Machine", 2011),
