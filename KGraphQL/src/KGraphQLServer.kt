@@ -82,7 +82,7 @@ fun Application.module(testing: Boolean = false) {
             query("movieGenre") {
                 resolver { genre: String ->
                     println("Searching movie by genre:$genre Thread:${Thread.currentThread().name}")
-                    allMovies.filter { movie -> movie.genre == genre }
+                    allMovies.filter { movie -> movie.genre.equals(genre, ignoreCase = true) }
                 }
             }
 
