@@ -35,24 +35,20 @@ fun Application.module(testing: Boolean = false) {
             /**
              * Here we define the API where clients can search using queries for a specific data.
              * To search for a band albums and year by band name we do the query
-             * * {music(band:"Depeche mode") {year, album}}
+             * * {musicBand(band:"Depeche mode") {year, album}}
              * * where first part of the query is what we want to search [music(band:"Depeche mode")]
              * * And the second part is what we want to obtain from the search [{year, album}]
              */
             query("musicBand") {
                 resolver { band: String ->
                     println("Searching for band:$band Thread:${Thread.currentThread().name}")
-                    when (band) {
-                        "Depeche mode", "depeche mode" -> depecheModeAlbums
-                        "Counting Crows", "counting crows" -> countingCrowsAlbums
-                        else -> listOf(Music("You need to specify a band.", 0))
-                    }
+                    allAlbums.filter { music -> music.band.equals(band, ignoreCase = true) }
                 }
             }
 
             /**
              * To search for a band albums and year by album we do the query
-             * *  music(year:1998) {year, album}
+             * *  musicAlbum(year:1998) {year, album}
              */
             query("musicAlbum") {
                 resolver { album: String ->
@@ -63,7 +59,7 @@ fun Application.module(testing: Boolean = false) {
 
             /**
              * To search for a band albums and year by year we do the query
-             * *  music(year:1998) {year, album}
+             * *  musicYear(year:1998) {year, album}
              */
             query("musicYear") {
                 resolver { year: Int ->
@@ -72,6 +68,10 @@ fun Application.module(testing: Boolean = false) {
                 }
             }
 
+            /**
+             * To search for a band albums and year by year we do the query
+             * *  musicYear(year:1998 album:"Recovering the Satellites") {year, album}
+             */
             query("musicAlbumYear") {
                 resolver { year: Int, album: String ->
                     println("Searching for year:$year Thread:${Thread.currentThread().name}")
@@ -79,19 +79,18 @@ fun Application.module(testing: Boolean = false) {
                 }
             }
 
-            query("movies") {
+            query("movieGenre") {
                 resolver { genre: String ->
-                    println("Searching for band:$genre Thread:${Thread.currentThread().name}")
-                    when (genre) {
-                        "Action", "action" -> actionMovies
-                        "Sci-fi", "sci-fi" -> sciFi
-                        else -> listOf("You need to specify a band.")
-                    }
+                    println("Searching movie by genre:$genre Thread:${Thread.currentThread().name}")
+                    allMovies.filter { movie -> movie.genre == genre }
                 }
             }
 
-            query("services") {
-                resolver { -> listOf("music", "movies") }
+            query("movieYear") {
+                resolver { year: Int ->
+                    println("Searching movie by year:$year Thread:${Thread.currentThread().name}")
+                    allMovies.filter { movie -> movie.year == year }
+                }
             }
         }
     }
@@ -103,22 +102,22 @@ fun Application.module(testing: Boolean = false) {
  */
 
 /**
- * In kGraphQL it's mandatory use [data] class type to render resppnses.
+ * In kGraphQL it's mandatory use [data] class type to render responses.
  */
-data class Music(val album: String, val year: Int)
+data class Music(val band: String, val album: String, val year: Int)
 
 val countingCrowsAlbums =
     listOf(
-        Music("August and everything after", 1996),
-        Music("Recovering the Satellites", 1998),
-        Music("This desert life", 2000),
-        Music("Hard Candy", 2003)
+        Music("counting crows", "August and everything after", 1996),
+        Music("counting crows", "Recovering the Satellites", 1998),
+        Music("counting crows", "This desert life", 2000),
+        Music("counting crows", "Hard Candy", 2003)
     )
 val depecheModeAlbums = listOf(
-    Music("Sound of the Universe", 2008),
-    Music("Delta Machine", 2011),
-    Music("Music For The Masses", 1987),
-    Music("Exciter", 2001)
+    Music("Depeche mode", "Sound of the Universe", 2008),
+    Music("Depeche mode", "Delta Machine", 2011),
+    Music("Depeche mode", "Music For The Masses", 1987),
+    Music("Depeche mode", "Exciter", 2001)
 )
 
 val allAlbums = countingCrowsAlbums + depecheModeAlbums
@@ -127,8 +126,18 @@ val allAlbums = countingCrowsAlbums + depecheModeAlbums
  * Movies
  * -------
  */
+data class Movie(val name: String, val genre: String, val year: Int)
 
-val actionMovies = listOf("Die Hard", "Breakpoint", "Speed")
-val sciFi = listOf("Avatar", "StarWars", "Solaris")
+val actionMovies = listOf(
+    Movie("Die Hard", "Action", 1989),
+    Movie("Breakpoint", "Action", 1991),
+    Movie("Speed", "Action", 1995)
+)
+val sciFi = listOf(
+    Movie("Avatar", "sci-fi", 2010),
+    Movie("StarWars", "sci-fi", 1970),
+    Movie("Solaris", "sci-fi", 2005)
+)
 
+val allMovies = actionMovies + sciFi
 
