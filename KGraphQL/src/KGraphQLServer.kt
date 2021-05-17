@@ -14,16 +14,17 @@ fun Application.module(testing: Boolean = false) {
      * We install the Ktor module [GraphQL] giving us as part of the DSL the
      * possibility to create the Schema programmatically.
      * [playground] This adds support for opening the graphql route within the browser
+     * [endpoint] Specify the main endpoint of the graphql server.
      */
     install(GraphQL) {
+
+        endpoint = "kGraphQL"
         playground = true
 
         /**
-         * We create programmatically the schema usibng:
-         * [configure] allow us configure the schema config programmatically
+         * We create programmatically the schema.
          */
         schema {
-
             /**
              * [Configure] method allows you customize schema behaviour.
              * By default the GraphQL service is running async using [CoroutineDispatcher=Default]
@@ -91,6 +92,17 @@ fun Application.module(testing: Boolean = false) {
             query("movieYear") {
                 resolver { year: Int ->
                     allMovies.findData { movie -> movie.year == year }
+                }
+            }
+
+            query("movieGenreYear") {
+                resolver { genre: String, year: Int ->
+                    allMovies.findData { movie ->
+                        movie.genre.name.equals(
+                            genre,
+                            ignoreCase = true
+                        ) && movie.year == year
+                    }
                 }
             }
         }
