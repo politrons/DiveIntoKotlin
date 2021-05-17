@@ -74,3 +74,10 @@ A cloud-native, distributed messaging and streaming platform
  
 * **[Publisher-Subscriber](features/src/main/kotlin/pulsar/PulsarFeature.kt)**
 
+![alt text](img/graphql.jpg)
+
+## GraphQL
+
+A query language for your API
+
+* **[Server](KGraphQL/src/KGraphQLServer.kt)**

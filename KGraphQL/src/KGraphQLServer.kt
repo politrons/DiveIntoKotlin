@@ -5,7 +5,7 @@ import com.politrons.Genre.*
 import io.ktor.application.*
 
 /**
- * To make a request to the service, connect to graphql interface [http://localhost:1981/graphql]
+ * To make a request to the service, connect to graphql interface [http://localhost:1981/kGraphQL]
  */
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
