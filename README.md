@@ -81,3 +81,11 @@ A cloud-native, distributed messaging and streaming platform
 A query language for your API
 
 * **[Server](KGraphQL/src/KGraphQLServer.kt)**
+
+![My image](img/magazine.png)
+
+## Magazine
+
+A Magazine example using Hexagonal + DDD + CQRS + Event Sourcing architecture patterns.
+
+You can find the code [here](https://github.com/politrons/Magazine)
